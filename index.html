@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Top10 Game</title>
+
+  <link rel="stylesheet" href="./styles.css" />
+
+  <style>
+    .hidden { display:none; }
+    #status { white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>Top10 Game</h1>
+      <p class="subtitle">Guess which item is ranked #10 (or any rank) — higher rank number = more points.</p>
+    </header>
+
+    <section id="setup-area" class="card">
+      <h2>Setup</h2>
+      <label class="label" for="team-names">Enter team names (comma separated)</label>
+      <input id="team-names" class="input" placeholder="e.g. Team A, Team B" autocomplete="off" />
+      <button id="start-btn" class="btn">Start Game</button>
+      <p class="hint">Tip: Use short names. Minimum 2 teams.</p>
+    </section>
+
+    <section id="game-area" class="card hidden">
+      <div class="row space-between">
+        <div>
+          <span class="pill" id="round-pill">Round 1</span>
+          <span class="pill" id="team-pill">Team: —</span>
+        </div>
+        <button id="new-game-btn" class="btn btn-secondary">New Game</button>
+      </div>
+
+      <h2 id="prompt" class="prompt">Loading prompt…</h2>
+
+      <div class="guess-box">
+        <label class="label" for="guess-input">Enter your guess</label>
+        <input id="guess-input" class="input" placeholder="Type an answer…" autocomplete="off" />
+        <button id="submit-btn" class="btn">Submit Guess</button>
+        <p class="hint" id="guess-hint">Each team submits one guess per round.</p>
+      </div>
+
+      <div class="divider"></div>
+      <h3>Scoreboard</h3>
+      <div id="scoreboard" class="scoreboard"></div>
+    </section>
+
+    <section id="result-area" class="card hidden"></section>
+
+    <section class="card">
+      <h3>Status</h3>
+      <div id="status">Starting…</div>
+    </section>
+  </div>
+
+  <!-- Pyodide loader -->
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+
+  <script>
+    const statusEl = document.querySelector("#status");
+
+    function setStatus(msg) {
+      statusEl.textContent = msg;
+    }
+
+    async function boot() {
+      try {
+        setStatus("Loading Python (Pyodide)…");
+        const pyodide = await loadPyodide();
+
+        setStatus("Loading game code…");
+        const mainPy = await (await fetch("./main.py")).text();
+        pyodide.FS.writeFile("main.py", mainPy);
+
+        const promptsJson = await (await fetch("./prompts.json")).text();
+        pyodide.FS.writeFile("prompts.json", promptsJson);
+
+        // Run the python module
+        await pyodide.runPythonAsync(`
+import main
+main.init()
+        `);
+
+        setStatus("Ready ✅");
+      } catch (err) {
+        setStatus("BOOT ERROR:\n" + err);
+        console.error(err);
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>

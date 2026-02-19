@@ -1,0 +1,177 @@
+:root {
+  --bg: #0b0f19;
+  --card: #121a2a;
+  --text: #e8eefc;
+  --muted: #a7b3d4;
+  --border: rgba(255, 255, 255, 0.10);
+  --accent: #5eead4;
+  --danger: #fb7185;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.header h1 {
+  margin: 8px 0 4px;
+  font-size: 28px;
+}
+
+.subtitle {
+  margin: 0 0 16px;
+  color: var(--muted);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.hidden { display: none; }
+
+.label {
+  display: block;
+  margin: 10px 0 6px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.input {
+  width: 100%;
+  font-size: 18px;
+  padding: 14px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(94,234,212,0.6);
+  box-shadow: 0 0 0 3px rgba(94,234,212,0.18);
+}
+
+.btn {
+  width: 100%;
+  margin-top: 12px;
+  font-size: 18px;           /* big for touch */
+  padding: 14px 16px;        /* big tap target */
+  border-radius: 14px;
+  border: 1px solid rgba(94,234,212,0.35);
+  background: rgba(94,234,212,0.14);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: scale(0.99);
+}
+
+.btn-secondary {
+  width: auto;
+  margin-top: 0;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border-color: var(--border);
+  background: rgba(255,255,255,0.06);
+}
+
+.hint {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.prompt {
+  margin: 12px 0 10px;
+  line-height: 1.2;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.pill {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 13px;
+  margin-right: 6px;
+}
+
+.guess-box {
+  margin-top: 10px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0;
+}
+
+.scoreboard {
+  display: grid;
+  gap: 10px;
+}
+
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+}
+
+.k {
+  color: var(--muted);
+}
+
+.result-title {
+  margin: 0 0 8px;
+}
+
+.list {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: var(--text);
+}
+
+.bad {
+  color: var(--danger);
+}
+
+.footer {
+  text-align: center;
+  color: var(--muted);
+  margin-top: 8px;
+}
+/* Prevent 300ms delays / weird gestures and make taps feel snappy */
+button, .btn {
+  touch-action: manipulation;
+}
