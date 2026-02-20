@@ -25,8 +25,8 @@ def set_status(msg: str):
     qs("#status").innerText = msg
 
 def normalize(s: str) -> str:
-    s = s.strip().lower()
-    s = re.sub(r"[^\w\s]", "", s)
+    s = (s or "").strip().lower()
+    s = re.sub(r"[^\w\s]", "", s, flags=re.UNICODE)
     s = re.sub(r"\s+", " ", s)
     return s
 
@@ -48,22 +48,39 @@ def allow_action(min_ms: int = 350) -> bool:
 # ---------- Data models ----------
 
 @dataclass
+class Answer:
+    name: str
+    fact: Optional[float] = None
+    aliases: List[str] = field(default_factory=list)
+
+@dataclass
 class Prompt:
     id: str
+    category: str
     prompt: str
-    answers: List[str]  # index 0 => rank 1, index 9 => rank 10
+    fact_label: str = ""
+    fact_unit: str = ""
+    answers: List[Answer] = field(default_factory=list)
 
 @dataclass
 class GameState:
     teams: List[str] = field(default_factory=list)
     scores: Dict[str, int] = field(default_factory=dict)
     round_num: int = 0
-    prompts: List[Prompt] = field(default_factory=list)
+
+    all_prompts: List[Prompt] = field(default_factory=list)   # everything from file
+    prompts: List[Prompt] = field(default_factory=list)       # filtered by pack
     used_prompt_ids: set = field(default_factory=set)
 
     current_prompt: Optional[Prompt] = None
     current_team_idx: int = 0
     guesses: Dict[str, str] = field(default_factory=dict)
+
+    # normalized accepted strings -> rank (1..10)
+    current_lookup: Dict[str, int] = field(default_factory=dict)
+
+    # pack selection
+    selected_pack: str = "__all__"
 
 
 STATE = GameState()
@@ -77,12 +94,63 @@ def load_prompts() -> List[Prompt]:
 
     prompts: List[Prompt] = []
     for item in raw:
+        answers: List[Answer] = []
+        for a in item["answers"]:
+            answers.append(Answer(
+                name=a["name"],
+                fact=a.get("fact", None),
+                aliases=a.get("aliases", []),
+            ))
+
         prompts.append(Prompt(
             id=item["id"],
+            category=item.get("category", "Uncategorized"),
             prompt=item["prompt"],
-            answers=item["answers"],
+            fact_label=item.get("fact_label", ""),
+            fact_unit=item.get("fact_unit", ""),
+            answers=answers,
         ))
     return prompts
+
+
+def get_available_packs(prompts: List[Prompt]) -> List[str]:
+    packs = sorted({p.category for p in prompts})
+    return packs
+
+
+def populate_pack_dropdown():
+    sel = qs("#pack-select")
+    if not sel:
+        return
+
+    # clear existing (keep the first "All" option if present)
+    sel.innerHTML = ""
+    opt_all = document.createElement("option")
+    opt_all.value = "__all__"
+    opt_all.text = "All categories"
+    sel.appendChild(opt_all)
+
+    for pack in get_available_packs(STATE.all_prompts):
+        opt = document.createElement("option")
+        opt.value = pack
+        opt.text = pack
+        sel.appendChild(opt)
+
+    # default selection
+    sel.value = "__all__"
+    STATE.selected_pack = "__all__"
+
+
+def apply_pack_filter():
+    pack = STATE.selected_pack
+    if pack == "__all__":
+        STATE.prompts = STATE.all_prompts[:]
+    else:
+        STATE.prompts = [p for p in STATE.all_prompts if p.category == pack]
+
+    # reset used prompts so rotation works within the selected pack
+    STATE.used_prompt_ids = set()
+
 
 def pick_next_prompt() -> Prompt:
     available = [p for p in STATE.prompts if p.id not in STATE.used_prompt_ids]
@@ -92,6 +160,22 @@ def pick_next_prompt() -> Prompt:
     p = random.choice(available)
     STATE.used_prompt_ids.add(p.id)
     return p
+
+
+# ---------- Per-round lookup (aliases) ----------
+
+def build_lookup(prompt: Prompt) -> Dict[str, int]:
+    lookup: Dict[str, int] = {}
+    for idx, ans in enumerate(prompt.answers):
+        rank = idx + 1
+        key = normalize(ans.name)
+        if key:
+            lookup[key] = rank
+        for al in ans.aliases:
+            k = normalize(al)
+            if k:
+                lookup[k] = rank
+    return lookup
 
 
 # ---------- UI ----------
@@ -111,34 +195,38 @@ def set_round_ui():
     qs("#prompt").innerText = STATE.current_prompt.prompt if STATE.current_prompt else "—"
     set_team_ui()
 
-def focus_guess_input(select_all: bool = False):
-    inp = qs("#guess-input")
-    inp.focus()
-    if select_all:
-        try:
-            inp.select()
-        except Exception:
-            pass
-
 def set_team_ui():
     if not STATE.teams:
         qs("#team-pill").innerText = "Team: —"
         return
     team = STATE.teams[STATE.current_team_idx]
     qs("#team-pill").innerText = f"Team: {team}"
-
-    # Clear & focus for fast pass-the-phone play
     qs("#guess-input").value = ""
-    focus_guess_input()
+    qs("#guess-input").focus()
+
+def format_fact(prompt: Prompt, fact_value) -> str:
+    if fact_value is None:
+        return ""
+    unit = (prompt.fact_unit or "").strip()
+
+    if isinstance(fact_value, float) and fact_value.is_integer():
+        fact_str = str(int(fact_value))
+    else:
+        fact_str = str(fact_value)
+
+    return f" ({fact_str} {unit})" if unit else f" ({fact_str})"
 
 def render_reveal(results: List[Tuple[str, str, int, Optional[int]]]):
     show("#result-area", True)
     ra = qs("#result-area")
 
-    answers = STATE.current_prompt.answers if STATE.current_prompt else []
+    prompt = STATE.current_prompt
+    answers = prompt.answers if prompt else []
+
     ranked = "<ol class='list'>"
     for i, ans in enumerate(answers):
-        ranked += f"<li><strong>#{i+1}</strong> — {ans}</li>"
+        suffix = format_fact(prompt, ans.fact) if prompt else ""
+        ranked += f"<li><strong>#{i+1}</strong> — {ans.name}{suffix}</li>"
     ranked += "</ol>"
 
     rows = ""
@@ -173,22 +261,19 @@ def render_reveal(results: List[Tuple[str, str, int, Optional[int]]]):
 
     proxy = create_proxy(_next)
     PROXIES.append(proxy)
-
-    # Touch-first: pointerup fires for mouse + touch + pen
     qs("#next-round-btn").addEventListener("pointerup", proxy)
 
 
 # ---------- Scoring ----------
 
-def score_guess(guess: str, answers: List[str]) -> Tuple[int, Optional[int]]:
+def score_guess(guess: str) -> Tuple[int, Optional[int]]:
     g = normalize(guess)
-    norm_answers = [normalize(a) for a in answers]
-    if g in norm_answers:
-        idx = norm_answers.index(g)
-        rank = idx + 1
-        points = rank
-        return points, rank
-    return 0, None
+    if not g:
+        return 0, None
+    rank = STATE.current_lookup.get(g)
+    if rank is None:
+        return 0, None
+    return rank, rank  # points = rank
 
 
 # ---------- Game Flow ----------
@@ -201,16 +286,15 @@ def reset_game():
     STATE.current_prompt = None
     STATE.current_team_idx = 0
     STATE.guesses = {}
+    STATE.current_lookup = {}
 
-    qs("#team-names").value = ""
     show("#setup-area", True)
     show("#game-area", False)
     show("#result-area", False)
     render_scoreboard()
 
-    # Focus team input for quick start
     qs("#team-names").focus()
-    set_status("Ready. Enter team names and press Start Game.")
+    set_status("Ready. Choose a category pack, enter team names, and press Start Game.")
 
 def start_game():
     raw = qs("#team-names").value
@@ -218,6 +302,12 @@ def start_game():
     if len(teams) < 2:
         set_status("Need at least 2 teams. Example: Team A, Team B")
         qs("#team-names").focus()
+        return
+
+    # Apply pack filter at start (based on dropdown)
+    apply_pack_filter()
+    if len(STATE.prompts) == 0:
+        set_status("No prompts in this pack. Pick another pack.")
         return
 
     STATE.teams = teams
@@ -235,6 +325,8 @@ def start_game():
 def next_round():
     STATE.round_num += 1
     STATE.current_prompt = pick_next_prompt()
+    STATE.current_lookup = build_lookup(STATE.current_prompt)
+
     STATE.current_team_idx = 0
     STATE.guesses = {}
 
@@ -263,7 +355,7 @@ def submit_guess():
         results: List[Tuple[str, str, int, Optional[int]]] = []
         for t in STATE.teams:
             g = STATE.guesses.get(t, "")
-            pts, rank = score_guess(g, STATE.current_prompt.answers)
+            pts, rank = score_guess(g)
             STATE.scores[t] = STATE.scores.get(t, 0) + pts
             results.append((t, g, pts, rank))
 
@@ -277,9 +369,20 @@ def submit_guess():
 
 def init():
     try:
-        STATE.prompts = load_prompts()
+        STATE.all_prompts = load_prompts()
+        STATE.prompts = STATE.all_prompts[:]
 
-        # Bind buttons with pointerup (touch-first)
+        populate_pack_dropdown()
+
+        # Dropdown change handler
+        def _pack_change(evt=None):
+            sel = qs("#pack-select")
+            STATE.selected_pack = sel.value
+            set_status(f"Selected pack: {sel.value}")
+        p = create_proxy(_pack_change); PROXIES.append(p)
+        qs("#pack-select").addEventListener("change", p)
+
+        # Start Game
         def _start(evt=None):
             if not allow_action():
                 return
@@ -287,6 +390,7 @@ def init():
         p = create_proxy(_start); PROXIES.append(p)
         qs("#start-btn").addEventListener("pointerup", p)
 
+        # New Game
         def _new(evt=None):
             if not allow_action():
                 return
@@ -294,19 +398,20 @@ def init():
         p = create_proxy(_new); PROXIES.append(p)
         qs("#new-game-btn").addEventListener("pointerup", p)
 
+        # Submit Guess
         def _submit(evt=None):
             submit_guess()
         p = create_proxy(_submit); PROXIES.append(p)
         qs("#submit-btn").addEventListener("pointerup", p)
 
-        # Mobile keyboard "Done"/Enter submits guess
+        # Enter submits guess
         def _keydown_guess(evt):
             if evt.key == "Enter":
                 submit_guess()
         p = create_proxy(_keydown_guess); PROXIES.append(p)
         qs("#guess-input").addEventListener("keydown", p)
 
-        # Mobile keyboard Enter starts game from team input
+        # Enter starts game from team names
         def _keydown_teams(evt):
             if evt.key == "Enter":
                 if allow_action():
@@ -314,18 +419,8 @@ def init():
         p = create_proxy(_keydown_teams); PROXIES.append(p)
         qs("#team-names").addEventListener("keydown", p)
 
-        # Tap anywhere in game area focuses the guess input (nice on phones)
-        def _focus_tap(evt=None):
-            # Don't steal focus when tapping buttons/inputs
-            tag = getattr(evt.target, "tagName", "")
-            if tag in ("BUTTON", "INPUT", "TEXTAREA", "SELECT"):
-                return
-            focus_guess_input(select_all=False)
-        p = create_proxy(_focus_tap); PROXIES.append(p)
-        qs("#game-area").addEventListener("pointerup", p)
-
         reset_game()
-        set_status("Ready ✅ Enter team names and press Start Game.")
+        set_status("Ready ✅ Choose a pack, enter team names, and press Start Game.")
     except Exception as e:
         set_status(f"INIT ERROR:\n{e}")
         raise

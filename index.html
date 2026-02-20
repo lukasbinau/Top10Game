@@ -6,7 +6,6 @@
   <title>Top10 Game</title>
 
   <link rel="stylesheet" href="./styles.css" />
-
   <style>
     .hidden { display:none; }
     #status { white-space: pre-wrap; }
@@ -16,13 +15,21 @@
   <div class="app">
     <header class="header">
       <h1>Top10 Game</h1>
-      <p class="subtitle">Guess which item is ranked #10 (or any rank) — higher rank number = more points.</p>
+      <p class="subtitle">First is fine. Tenth is better.</p>
     </header>
 
     <section id="setup-area" class="card">
       <h2>Setup</h2>
+
+      <label class="label" for="pack-select">Choose category pack</label>
+      <select id="pack-select" class="input">
+        <option value="__all__">All categories</option>
+      </select>
+      <p class="hint">Pick a pack to restrict which prompts appear.</p>
+
       <label class="label" for="team-names">Enter team names (comma separated)</label>
       <input id="team-names" class="input" placeholder="e.g. Team A, Team B" autocomplete="off" />
+
       <button id="start-btn" class="btn">Start Game</button>
       <p class="hint">Tip: Use short names. Minimum 2 teams.</p>
     </section>
@@ -58,18 +65,14 @@
     </section>
   </div>
 
-  <!-- Pyodide loader -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
 
   <script>
     const statusEl = document.querySelector("#status");
+    function setStatus(msg){ statusEl.textContent = msg; }
 
-    function setStatus(msg) {
-      statusEl.textContent = msg;
-    }
-
-    async function boot() {
-      try {
+    async function boot(){
+      try{
         setStatus("Loading Python (Pyodide)…");
         const pyodide = await loadPyodide();
 
@@ -80,14 +83,10 @@
         const promptsJson = await (await fetch("./prompts.json")).text();
         pyodide.FS.writeFile("prompts.json", promptsJson);
 
-        // Run the python module
-        await pyodide.runPythonAsync(`
-import main
-main.init()
-        `);
+        await pyodide.runPythonAsync(`import main\nmain.init()`);
 
         setStatus("Ready ✅");
-      } catch (err) {
+      }catch(err){
         setStatus("BOOT ERROR:\n" + err);
         console.error(err);
       }

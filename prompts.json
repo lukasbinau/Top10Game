@@ -1,82 +1,241 @@
 [
   {
-    "id": "largest_cities",
-    "prompt": "Top 10 largest cities in the world by population",
-    "answers": ["Tokyo", "Delhi", "Shanghai", "São Paulo", "Mexico City", "Cairo", "Dhaka", "Mumbai", "Beijing", "Osaka"]
+    "id": "largest_cities_metro_pop",
+    "category": "Geography: Cities",
+    "prompt": "Top 10 largest urban areas in the world (approx. metro population).",
+    "fact_label": "Approx. metro population",
+    "fact_unit": "million",
+    "answers": [
+      {
+        "name": "Tokyo",
+        "fact": 37.4,
+        "aliases": ["tokyo", "tokyo metropolis", "greater tokyo", "tokyo-yokohama", "tokyo yokohama", "tokyo metropolitan area"]
+      },
+      {
+        "name": "Delhi",
+        "fact": 33.8,
+        "aliases": ["delhi", "new delhi", "delhi ncr", "ncr delhi", "national capital region"]
+      },
+      {
+        "name": "Shanghai",
+        "fact": 29.9,
+        "aliases": ["shanghai", "shanghai city", "shanghai municipality"]
+      },
+      {
+        "name": "Dhaka",
+        "fact": 23.9,
+        "aliases": ["dhaka", "dacca", "greater dhaka"]
+      },
+      {
+        "name": "São Paulo",
+        "fact": 22.8,
+        "aliases": ["sao paulo", "são paulo", "saopaulo", "sao-paulo", "greater sao paulo"]
+      },
+      {
+        "name": "Mexico City",
+        "fact": 22.5,
+        "aliases": ["mexico city", "ciudad de mexico", "cdmx", "mexico df", "distrito federal"]
+      },
+      {
+        "name": "Cairo",
+        "fact": 22.2,
+        "aliases": ["cairo", "al qahirah", "greater cairo"]
+      },
+      {
+        "name": "Beijing",
+        "fact": 21.9,
+        "aliases": ["beijing", "peking"]
+      },
+      {
+        "name": "Mumbai",
+        "fact": 21.7,
+        "aliases": ["mumbai", "bombay", "greater mumbai"]
+      },
+      {
+        "name": "Osaka",
+        "fact": 19.0,
+        "aliases": ["osaka", "osaka kobe kyoto", "keihanshin", "greater osaka"]
+      }
+    ]
   },
+
   {
-    "id": "largest_countries",
-    "prompt": "Top 10 largest countries by land area",
-    "answers": ["Russia", "Canada", "China", "United States", "Brazil", "Australia", "India", "Argentina", "Kazakhstan", "Algeria"]
+    "id": "largest_countries_area",
+    "category": "Geography: Countries",
+    "prompt": "Top 10 largest countries by total area.",
+    "fact_label": "Total area",
+    "fact_unit": "km²",
+    "answers": [
+      {
+        "name": "Russia",
+        "fact": 17098246,
+        "aliases": ["russia", "russian federation"]
+      },
+      {
+        "name": "Canada",
+        "fact": 9984670,
+        "aliases": ["canada"]
+      },
+      {
+        "name": "China",
+        "fact": 9596961,
+        "aliases": ["china", "prc", "people's republic of china"]
+      },
+      {
+        "name": "United States",
+        "fact": 9525067,
+        "aliases": ["united states", "usa", "us", "u.s.", "america", "united states of america"]
+      },
+      {
+        "name": "Brazil",
+        "fact": 8515767,
+        "aliases": ["brazil", "brasil"]
+      },
+      {
+        "name": "Australia",
+        "fact": 7692024,
+        "aliases": ["australia"]
+      },
+      {
+        "name": "India",
+        "fact": 3287263,
+        "aliases": ["india", "bharat"]
+      },
+      {
+        "name": "Argentina",
+        "fact": 2780400,
+        "aliases": ["argentina"]
+      },
+      {
+        "name": "Kazakhstan",
+        "fact": 2724900,
+        "aliases": ["kazakhstan"]
+      },
+      {
+        "name": "Algeria",
+        "fact": 2381741,
+        "aliases": ["algeria"]
+      }
+    ]
   },
-  {
-    "id": "longest_rivers",
-    "prompt": "Top 10 longest rivers in the world",
-    "answers": ["Nile", "Amazon", "Yangtze", "Mississippi", "Yenisei", "Yellow River", "Ob", "Parana", "Congo", "Amur"]
-  },
+
   {
     "id": "highest_mountains",
-    "prompt": "Top 10 highest mountains in the world",
-    "answers": ["Mount Everest", "K2", "Kangchenjunga", "Lhotse", "Makalu", "Cho Oyu", "Dhaulagiri I", "Manaslu", "Nanga Parbat", "Annapurna I"]
+    "category": "Nature: Mountains",
+    "prompt": "Top 10 highest mountains in the world.",
+    "fact_label": "Elevation",
+    "fact_unit": "m",
+    "answers": [
+      {
+        "name": "Mount Everest",
+        "fact": 8848.86,
+        "aliases": ["everest", "mt everest", "sagarmatha", "chomolungma"]
+      },
+      {
+        "name": "K2",
+        "fact": 8611,
+        "aliases": ["k2", "mount k2", "chhogori"]
+      },
+      {
+        "name": "Kangchenjunga",
+        "fact": 8586,
+        "aliases": ["kangchenjunga", "kanchenjunga"]
+      },
+      {
+        "name": "Lhotse",
+        "fact": 8516,
+        "aliases": ["lhotse"]
+      },
+      {
+        "name": "Makalu",
+        "fact": 8485,
+        "aliases": ["makalu"]
+      },
+      {
+        "name": "Cho Oyu",
+        "fact": 8188,
+        "aliases": ["cho oyu", "cho-oyu"]
+      },
+      {
+        "name": "Dhaulagiri I",
+        "fact": 8167,
+        "aliases": ["dhaulagiri", "dhaulagiri 1"]
+      },
+      {
+        "name": "Manaslu",
+        "fact": 8163,
+        "aliases": ["manaslu"]
+      },
+      {
+        "name": "Nanga Parbat",
+        "fact": 8126,
+        "aliases": ["nanga parbat", "killer mountain"]
+      },
+      {
+        "name": "Annapurna I",
+        "fact": 8091,
+        "aliases": ["annapurna", "annapurna 1"]
+      }
+    ]
   },
+
   {
-    "id": "most_spoken_languages",
-    "prompt": "Top 10 most spoken languages in the world (by total speakers)",
-    "answers": ["English", "Mandarin Chinese", "Hindi", "Spanish", "French", "Arabic", "Bengali", "Portuguese", "Russian", "Urdu"]
-  },
-  {
-    "id": "highest_grossing_movies",
-    "prompt": "Top 10 highest-grossing movies of all time (worldwide box office)",
-    "answers": ["Avatar", "Avengers: Endgame", "Titanic", "Star Wars: The Force Awakens", "Avengers: Infinity War", "Spider-Man: No Way Home", "Jurassic World", "The Lion King", "The Avengers", "Furious 7"]
-  },
-  {
-    "id": "largest_oceans_seas",
-    "prompt": "Top 10 largest oceans and seas by area",
-    "answers": ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean", "Southern Ocean", "Arctic Ocean", "Philippine Sea", "Coral Sea", "Arabian Sea", "South China Sea", "Caribbean Sea"]
-  },
-  {
-    "id": "most_populous_countries",
-    "prompt": "Top 10 most populous countries in the world",
-    "answers": ["India", "China", "United States", "Indonesia", "Pakistan", "Nigeria", "Brazil", "Bangladesh", "Russia", "Mexico"]
-  },
-  {
-    "id": "largest_islands",
-    "prompt": "Top 10 largest islands in the world",
-    "answers": ["Greenland", "New Guinea", "Borneo", "Madagascar", "Baffin Island", "Sumatra", "Honshu", "Victoria Island", "Great Britain", "Ellesmere Island"]
-  },
-  {
-    "id": "most_valuable_companies",
-    "prompt": "Top 10 most valuable companies by market cap",
-    "answers": ["Microsoft", "Apple", "Saudi Aramco", "Alphabet", "Amazon", "Nvidia", "Meta", "Berkshire Hathaway", "Tesla", "TSMC"]
-  },
-  {
-    "id": "largest_deserts",
-    "prompt": "Top 10 largest deserts in the world",
-    "answers": ["Antarctic Desert", "Arctic Desert", "Sahara", "Arabian Desert", "Gobi Desert", "Kalahari Desert", "Patagonian Desert", "Great Victoria Desert", "Syrian Desert", "Great Basin Desert"]
-  },
-  {
-    "id": "most_followed_instagram",
-    "prompt": "Top 10 most followed Instagram accounts",
-    "answers": ["Instagram", "Cristiano Ronaldo", "Lionel Messi", "Selena Gomez", "Kylie Jenner", "Dwayne Johnson", "Ariana Grande", "Kim Kardashian", "Beyonce", "Khloe Kardashian"]
-  },
-  {
-    "id": "largest_lakes",
-    "prompt": "Top 10 largest lakes by surface area",
-    "answers": ["Caspian Sea", "Lake Superior", "Lake Victoria", "Lake Huron", "Lake Michigan", "Lake Tanganyika", "Lake Baikal", "Great Bear Lake", "Lake Malawi", "Great Slave Lake"]
-  },
-  {
-    "id": "most_gold_medals_olympics",
-    "prompt": "Top 10 countries with the most Olympic gold medals (all-time)",
-    "answers": ["United States", "Soviet Union", "Germany", "Great Britain", "China", "France", "Italy", "Sweden", "Hungary", "Japan"]
-  },
-  {
-    "id": "highest_paid_athletes",
-    "prompt": "Top 10 highest-paid athletes in the world",
-    "answers": ["Cristiano Ronaldo", "Lionel Messi", "LeBron James", "Kylian Mbappe", "Stephen Curry", "Kevin Durant", "Roger Federer", "Canelo Alvarez", "Tiger Woods", "Neymar"]
-  },
-  {
-    "id": "largest_airports",
-    "prompt": "Top 10 busiest airports in the world (by passenger traffic)",
-    "answers": ["Hartsfield-Jackson Atlanta", "Dubai International", "Dallas/Fort Worth", "London Heathrow", "Tokyo Haneda", "Denver International", "Istanbul Airport", "Los Angeles International", "Chicago O'Hare", "Guangzhou Baiyun"]
+    "id": "longest_rivers",
+    "category": "Nature: Rivers",
+    "prompt": "Top 10 longest rivers in the world.",
+    "fact_label": "Approx. length",
+    "fact_unit": "km",
+    "answers": [
+      {
+        "name": "Nile",
+        "fact": 6650,
+        "aliases": ["nile", "river nile"]
+      },
+      {
+        "name": "Amazon",
+        "fact": 6400,
+        "aliases": ["amazon", "amazon river", "rio amazonas"]
+      },
+      {
+        "name": "Yangtze",
+        "fact": 6300,
+        "aliases": ["yangtze", "chang jiang"]
+      },
+      {
+        "name": "Mississippi–Missouri",
+        "fact": 6275,
+        "aliases": ["mississippi", "missouri river", "mississippi missouri"]
+      },
+      {
+        "name": "Yenisei",
+        "fact": 5539,
+        "aliases": ["yenisei", "enisey"]
+      },
+      {
+        "name": "Yellow River",
+        "fact": 5464,
+        "aliases": ["yellow river", "huang he"]
+      },
+      {
+        "name": "Ob–Irtysh",
+        "fact": 5410,
+        "aliases": ["ob", "irtysh"]
+      },
+      {
+        "name": "Paraná",
+        "fact": 4880,
+        "aliases": ["parana", "paraná"]
+      },
+      {
+        "name": "Congo",
+        "fact": 4700,
+        "aliases": ["congo", "zaire"]
+      },
+      {
+        "name": "Amur",
+        "fact": 4444,
+        "aliases": ["amur", "heilongjiang"]
+      }
+    ]
   }
 ]
