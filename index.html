@@ -19,6 +19,8 @@
       <p class="subtitle">First is fine. Tenth is better.</p>
     </header>
 
+    <button id="audio-toggle" class="audio-toggle" title="Toggle sound">🔊</button>
+
     <section id="setup-area" class="card">
       <h2>Setup</h2>
 
@@ -28,11 +30,16 @@
       </select>
       <p class="hint">Pick a pack to restrict which prompts appear.</p>
 
-      <label class="label" for="team-names">Enter team names (comma separated)</label>
-      <input id="team-names" class="input" placeholder="e.g. Team A, Team B" autocomplete="off" />
+      <label class="label" for="team-name-input">Add teams (2–8)</label>
+      <div class="team-input-row">
+        <input id="team-name-input" class="input" placeholder="Enter team name…" autocomplete="off" maxlength="20" />
+        <button id="add-team-btn" class="btn-check" title="Add team">✓</button>
+      </div>
 
-      <button id="start-btn" class="btn">Start Game</button>
-      <p class="hint">Tip: Use short names. Minimum 2 teams.</p>
+      <div id="team-list" class="team-list"></div>
+
+      <button id="start-btn" class="btn hidden">Start Game</button>
+      <p class="hint">Tip: Use short names. Minimum 2, maximum 8 teams.</p>
     </section>
 
     <section id="game-area" class="card hidden">
@@ -40,10 +47,13 @@
         <div>
           <span class="pill" id="round-pill">Round 1</span>
           <span class="pill" id="team-pill">Team: —</span>
-        <div class="row" style="gap:10px;">
-            <button id="skip-btn" class="btn btn-secondary">Skip</button>
-            <button id="new-game-btn" class="btn btn-secondary">New Game</button>
         </div>
+
+        <div class="row" style="gap:10px;">
+          <button id="skip-btn" class="btn btn-secondary">Skip</button>
+          <button id="new-game-btn" class="btn btn-secondary">New Game</button>
+        </div>
+      </div>
 
       <h2 id="prompt" class="prompt">Loading prompt…</h2>
 
@@ -52,12 +62,13 @@
         <input id="guess-input" class="input" placeholder="Type an answer…" autocomplete="off" />
         <button id="submit-btn" class="btn">Submit Guess</button>
         <p class="hint" id="guess-hint">Each team submits one guess per round.</p>
-      </div>
+    </div>
 
-      <div class="divider"></div>
-      <h3>Scoreboard</h3>
-      <div id="scoreboard" class="scoreboard"></div>
-    </section>
+    <div class="divider"></div>
+    <h3>Scoreboard</h3>
+    <div id="scoreboard" class="scoreboard"></div>
+  </section>
+
 
     <section id="result-area" class="card hidden"></section>
 
@@ -67,6 +78,7 @@
     </section>
   </div>
 
+  <script src="./sounds.js"></script>
   <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
 
   <script>
@@ -95,6 +107,12 @@
     }
 
     boot();
+
+    // Audio toggle
+    document.getElementById('audio-toggle').addEventListener('click', () => {
+      const isMuted = window.GameAudio.toggleMute();
+      document.getElementById('audio-toggle').textContent = isMuted ? '🔇' : '🔊';
+    });
   </script>
 </body>
 </html>
