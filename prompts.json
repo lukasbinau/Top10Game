@@ -6,181 +6,132 @@
     "fact_label": "Approx. metro population",
     "fact_unit": "million",
     "answers": [
-      {
-        "name": "Tokyo",
-        "fact": 37.4,
-        "aliases": ["tokyo", "tokyo metropolis", "greater tokyo", "tokyo-yokohama", "tokyo yokohama", "tokyo metropolitan area"]
-      },
-      {
-        "name": "Delhi",
-        "fact": 33.8,
-        "aliases": ["delhi", "new delhi", "delhi ncr", "ncr delhi", "national capital region"]
-      },
-      {
-        "name": "Shanghai",
-        "fact": 29.9,
-        "aliases": ["shanghai", "shanghai city", "shanghai municipality"]
-      },
-      {
-        "name": "Dhaka",
-        "fact": 23.9,
-        "aliases": ["dhaka", "dacca", "greater dhaka"]
-      },
-      {
-        "name": "São Paulo",
-        "fact": 22.8,
-        "aliases": ["sao paulo", "são paulo", "saopaulo", "sao-paulo", "greater sao paulo"]
-      },
-      {
-        "name": "Mexico City",
-        "fact": 22.5,
-        "aliases": ["mexico city", "ciudad de mexico", "cdmx", "mexico df", "distrito federal"]
-      },
-      {
-        "name": "Cairo",
-        "fact": 22.2,
-        "aliases": ["cairo", "al qahirah", "greater cairo"]
-      },
-      {
-        "name": "Beijing",
-        "fact": 21.9,
-        "aliases": ["beijing", "peking"]
-      },
-      {
-        "name": "Mumbai",
-        "fact": 21.7,
-        "aliases": ["mumbai", "bombay", "greater mumbai"]
-      },
-      {
-        "name": "Osaka",
-        "fact": 19.0,
-        "aliases": ["osaka", "osaka kobe kyoto", "keihanshin", "greater osaka"]
-      }
+      { "name": "Tokyo", "fact": 37.4, "aliases": [ "tokyo", "tokyo metropolis", "greater tokyo", "tokyo-yokohama", "tokyo yokohama", "tokyo metropolitan area" ] },
+      { "name": "Delhi", "fact": 33.8, "aliases": [ "delhi", "new delhi", "delhi ncr", "ncr delhi", "national capital region" ] },
+      { "name": "Shanghai", "fact": 29.9, "aliases": [ "shanghai", "shanghai city", "shanghai municipality" ] },
+      { "name": "Dhaka", "fact": 23.9, "aliases": [ "dhaka", "dacca", "greater dhaka" ] },
+      { "name": "São Paulo", "fact": 22.8, "aliases": [ "sao paulo", "são paulo", "saopaulo", "sao-paulo", "greater sao paulo" ] },
+      { "name": "Mexico City", "fact": 22.5, "aliases": [ "mexico city", "ciudad de mexico", "cdmx", "mexico df", "distrito federal" ] },
+      { "name": "Cairo", "fact": 22.2, "aliases": [ "cairo", "al qahirah", "greater cairo" ] },
+      { "name": "Beijing", "fact": 21.9, "aliases": [ "beijing", "peking" ] },
+      { "name": "Mumbai", "fact": 21.7, "aliases": [ "mumbai", "bombay", "greater mumbai" ] },
+      { "name": "Osaka", "fact": 19.0, "aliases": [ "osaka", "osaka kobe kyoto", "keihanshin", "greater osaka" ] }
     ]
   },
-
   {
-  "id": "most_visited_cities",
-  "category": "Geography: Cities",
-  "prompt": "Top 10 most visited cities in the world (annual international visitors).",
-  "fact_label": "Annual visitors",
-  "fact_unit": "million",
-  "answers": [
-    { "name": "Bangkok", "fact": 22.8, "aliases": ["bangkok"] },
-    { "name": "Paris", "fact": 19.1, "aliases": ["paris"] },
-    { "name": "London", "fact": 19.0, "aliases": ["london"] },
-    { "name": "Dubai", "fact": 16.8, "aliases": ["dubai"] },
-    { "name": "Singapore", "fact": 16.6, "aliases": ["singapore"] },
-    { "name": "Kuala Lumpur", "fact": 13.8, "aliases": ["kuala lumpur", "kl"] },
-    { "name": "New York City", "fact": 13.6, "aliases": ["new york", "nyc", "new york city"] },
-    { "name": "Istanbul", "fact": 13.4, "aliases": ["istanbul"] },
-    { "name": "Tokyo", "fact": 12.9, "aliases": ["tokyo"] },
-    { "name": "Antalya", "fact": 12.4, "aliases": ["antalya"] }
-  ]
-    },
-
-    {
-  "id": "cities_most_skyscrapers",
-  "category": "Geography: Cities",
-  "prompt": "Top 10 cities with the most skyscrapers (150m+ buildings).",
-  "fact_label": "Skyscrapers",
-  "fact_unit": "buildings",
-  "answers": [
-    { "name": "Hong Kong", "fact": 550, "aliases": ["hong kong"] },
-    { "name": "Shenzhen", "fact": 400, "aliases": ["shenzhen"] },
-    { "name": "New York City", "fact": 320, "aliases": ["new york", "nyc"] },
-    { "name": "Dubai", "fact": 250, "aliases": ["dubai"] },
-    { "name": "Shanghai", "fact": 200, "aliases": ["shanghai"] },
-    { "name": "Guangzhou", "fact": 190, "aliases": ["guangzhou"] },
-    { "name": "Chicago", "fact": 140, "aliases": ["chicago"] },
-    { "name": "Chongqing", "fact": 130, "aliases": ["chongqing"] },
-    { "name": "Tokyo", "fact": 120, "aliases": ["tokyo"] },
-    { "name": "Kuala Lumpur", "fact": 110, "aliases": ["kuala lumpur", "kl"] }
-  ]
-},
-
-{
-  "id": "highest_capital_cities",
-  "category": "Geography: Cities",
-  "prompt": "Top 10 highest capital cities by elevation above sea level.",
-  "fact_label": "Elevation",
-  "fact_unit": "m",
-  "answers": [
-    { "name": "La Paz", "fact": 3640, "aliases": ["la paz"] },
-    { "name": "Quito", "fact": 2850, "aliases": ["quito"] },
-    { "name": "Bogotá", "fact": 2640, "aliases": ["bogota", "bogotá"] },
-    { "name": "Addis Ababa", "fact": 2355, "aliases": ["addis ababa"] },
-    { "name": "Thimphu", "fact": 2334, "aliases": ["thimphu"] },
-    { "name": "Asmara", "fact": 2325, "aliases": ["asmara"] },
-    { "name": "Sana'a", "fact": 2300, "aliases": ["sanaa", "sana'a"] },
-    { "name": "Mexico City", "fact": 2250, "aliases": ["mexico city", "cdmx"] },
-    { "name": "Nairobi", "fact": 1795, "aliases": ["nairobi"] },
-    { "name": "Madrid", "fact": 667, "aliases": ["madrid"] }
-  ]
-},
-
-{
-  "id": "most_expensive_cities",
-  "category": "Geography: Cities",
-  "prompt": "Top 10 most expensive cities in the world (cost of living rankings).",
-  "fact_label": "Global ranking",
-  "fact_unit": "",
-  "answers": [
-    { "name": "Singapore", "fact": 1, "aliases": ["singapore"] },
-    { "name": "Zurich", "fact": 2, "aliases": ["zurich"] },
-    { "name": "New York City", "fact": 3, "aliases": ["new york", "nyc"] },
-    { "name": "Geneva", "fact": 4, "aliases": ["geneva"] },
-    { "name": "Hong Kong", "fact": 5, "aliases": ["hong kong"] },
-    { "name": "Los Angeles", "fact": 6, "aliases": ["los angeles", "la"] },
-    { "name": "Paris", "fact": 7, "aliases": ["paris"] },
-    { "name": "Copenhagen", "fact": 8, "aliases": ["copenhagen"] },
-    { "name": "Tel Aviv", "fact": 9, "aliases": ["tel aviv"] },
-    { "name": "San Francisco", "fact": 10, "aliases": ["san francisco"] }
-  ]
-},
-
-{
-  "id": "largest_metro_systems",
-  "category": "Geography: Cities",
-  "prompt": "Top 10 cities with the largest metro systems (by route length).",
-  "fact_label": "Route length",
-  "fact_unit": "km",
-  "answers": [
-    { "name": "Shanghai", "fact": 830, "aliases": ["shanghai"] },
-    { "name": "Beijing", "fact": 780, "aliases": ["beijing"] },
-    { "name": "Guangzhou", "fact": 620, "aliases": ["guangzhou"] },
-    { "name": "Chengdu", "fact": 550, "aliases": ["chengdu"] },
-    { "name": "Shenzhen", "fact": 540, "aliases": ["shenzhen"] },
-    { "name": "New York City", "fact": 400, "aliases": ["new york", "nyc"] },
-    { "name": "London", "fact": 402, "aliases": ["london"] },
-    { "name": "Moscow", "fact": 397, "aliases": ["moscow"] },
-    { "name": "Tokyo", "fact": 304, "aliases": ["tokyo"] },
-    { "name": "Madrid", "fact": 294, "aliases": ["madrid"] }
-  ]
-},
-
-{
-  "id": "cities_most_bridges",
-  "category": "Geography: Cities",
-  "prompt": "Top 10 cities with the most bridges.",
-  "fact_label": "Estimated bridges",
-  "fact_unit": "",
-  "answers": [
-    { "name": "Hamburg", "fact": 2500, "aliases": ["hamburg"] },
-    { "name": "Amsterdam", "fact": 1500, "aliases": ["amsterdam"] },
-    { "name": "Berlin", "fact": 960, "aliases": ["berlin"] },
-    { "name": "Venice", "fact": 435, "aliases": ["venice"] },
-    { "name": "Vienna", "fact": 800, "aliases": ["vienna"] },
-    { "name": "Saint Petersburg", "fact": 342, "aliases": ["saint petersburg", "st petersburg"] },
-    { "name": "Osaka", "fact": 900, "aliases": ["osaka"] },
-    { "name": "Pittsburgh", "fact": 446, "aliases": ["pittsburgh"] },
-    { "name": "Stockholm", "fact": 300, "aliases": ["stockholm"] },
-    { "name": "Prague", "fact": 200, "aliases": ["prague"] }
-  ]
-},
-
-
-
+    "id": "most_visited_cities",
+    "category": "Geography: Cities",
+    "prompt": "Top 10 most visited cities in the world (annual international visitors).",
+    "fact_label": "Annual visitors",
+    "fact_unit": "million",
+    "answers": [
+      { "name": "Bangkok", "fact": 22.8, "aliases": [ "bangkok" ] },
+      { "name": "Paris", "fact": 19.1, "aliases": [ "paris" ] },
+      { "name": "London", "fact": 19.0, "aliases": [ "london" ] },
+      { "name": "Dubai", "fact": 16.8, "aliases": [ "dubai" ] },
+      { "name": "Singapore", "fact": 16.6, "aliases": [ "singapore" ] },
+      { "name": "Kuala Lumpur", "fact": 13.8, "aliases": [ "kuala lumpur", "kl" ] },
+      { "name": "New York City", "fact": 13.6, "aliases": [ "new york", "nyc", "new york city" ] },
+      { "name": "Istanbul", "fact": 13.4, "aliases": [ "istanbul" ] },
+      { "name": "Tokyo", "fact": 12.9, "aliases": [ "tokyo" ] },
+      { "name": "Antalya", "fact": 12.4, "aliases": [ "antalya" ] }
+    ]
+  },
+  {
+    "id": "cities_most_skyscrapers",
+    "category": "Geography: Cities",
+    "prompt": "Top 10 cities with the most skyscrapers (150m+ buildings).",
+    "fact_label": "Skyscrapers",
+    "fact_unit": "buildings",
+    "answers": [
+      { "name": "Hong Kong", "fact": 550, "aliases": [ "hong kong" ] },
+      { "name": "Shenzhen", "fact": 400, "aliases": [ "shenzhen" ] },
+      { "name": "New York City", "fact": 320, "aliases": [ "new york", "nyc" ] },
+      { "name": "Dubai", "fact": 250, "aliases": [ "dubai" ] },
+      { "name": "Shanghai", "fact": 200, "aliases": [ "shanghai" ] },
+      { "name": "Guangzhou", "fact": 190, "aliases": [ "guangzhou" ] },
+      { "name": "Chicago", "fact": 140, "aliases": [ "chicago" ] },
+      { "name": "Chongqing", "fact": 130, "aliases": [ "chongqing" ] },
+      { "name": "Tokyo", "fact": 120, "aliases": [ "tokyo" ] },
+      { "name": "Kuala Lumpur", "fact": 110, "aliases": [ "kuala lumpur", "kl" ] }
+    ]
+  },
+  {
+    "id": "highest_capital_cities",
+    "category": "Geography: Cities",
+    "prompt": "Top 10 highest capital cities by elevation above sea level.",
+    "fact_label": "Elevation",
+    "fact_unit": "m",
+    "answers": [
+      { "name": "La Paz", "fact": 3640, "aliases": [ "la paz" ] },
+      { "name": "Quito", "fact": 2850, "aliases": [ "quito" ] },
+      { "name": "Bogotá", "fact": 2640, "aliases": [ "bogota", "bogotá" ] },
+      { "name": "Addis Ababa", "fact": 2355, "aliases": [ "addis ababa" ] },
+      { "name": "Thimphu", "fact": 2334, "aliases": [ "thimphu" ] },
+      { "name": "Asmara", "fact": 2325, "aliases": [ "asmara" ] },
+      { "name": "Sana'a", "fact": 2300, "aliases": [ "sanaa", "sana'a" ] },
+      { "name": "Mexico City", "fact": 2250, "aliases": [ "mexico city", "cdmx" ] },
+      { "name": "Nairobi", "fact": 1795, "aliases": [ "nairobi" ] },
+      { "name": "Madrid", "fact": 667, "aliases": [ "madrid" ] }
+    ]
+  },
+  {
+    "id": "most_expensive_cities",
+    "category": "Geography: Cities",
+    "prompt": "Top 10 most expensive cities in the world (cost of living rankings).",
+    "fact_label": "Global ranking",
+    "fact_unit": "",
+    "answers": [
+      { "name": "Singapore", "fact": 1, "aliases": [ "singapore" ] },
+      { "name": "Zurich", "fact": 2, "aliases": [ "zurich" ] },
+      { "name": "New York City", "fact": 3, "aliases": [ "new york", "nyc" ] },
+      { "name": "Geneva", "fact": 4, "aliases": [ "geneva" ] },
+      { "name": "Hong Kong", "fact": 5, "aliases": [ "hong kong" ] },
+      { "name": "Los Angeles", "fact": 6, "aliases": [ "los angeles", "la" ] },
+      { "name": "Paris", "fact": 7, "aliases": [ "paris" ] },
+      { "name": "Copenhagen", "fact": 8, "aliases": [ "copenhagen" ] },
+      { "name": "Tel Aviv", "fact": 9, "aliases": [ "tel aviv" ] },
+      { "name": "San Francisco", "fact": 10, "aliases": [ "san francisco" ] }
+    ]
+  },
+  {
+    "id": "largest_metro_systems",
+    "category": "Geography: Cities",
+    "prompt": "Top 10 cities with the largest metro systems (by route length).",
+    "fact_label": "Route length",
+    "fact_unit": "km",
+    "answers": [
+      { "name": "Shanghai", "fact": 830, "aliases": [ "shanghai" ] },
+      { "name": "Beijing", "fact": 780, "aliases": [ "beijing" ] },
+      { "name": "Guangzhou", "fact": 620, "aliases": [ "guangzhou" ] },
+      { "name": "Chengdu", "fact": 550, "aliases": [ "chengdu" ] },
+      { "name": "Shenzhen", "fact": 540, "aliases": [ "shenzhen" ] },
+      { "name": "New York City", "fact": 400, "aliases": [ "new york", "nyc" ] },
+      { "name": "London", "fact": 402, "aliases": [ "london" ] },
+      { "name": "Moscow", "fact": 397, "aliases": [ "moscow" ] },
+      { "name": "Tokyo", "fact": 304, "aliases": [ "tokyo" ] },
+      { "name": "Madrid", "fact": 294, "aliases": [ "madrid" ] }
+    ]
+  },
+  {
+    "id": "cities_most_bridges",
+    "category": "Geography: Cities",
+    "prompt": "Top 10 cities with the most bridges.",
+    "fact_label": "Estimated bridges",
+    "fact_unit": "",
+    "answers": [
+      { "name": "Hamburg", "fact": 2500, "aliases": [ "hamburg" ] },
+      { "name": "Amsterdam", "fact": 1500, "aliases": [ "amsterdam" ] },
+      { "name": "Berlin", "fact": 960, "aliases": [ "berlin" ] },
+      { "name": "Venice", "fact": 435, "aliases": [ "venice" ] },
+      { "name": "Vienna", "fact": 800, "aliases": [ "vienna" ] },
+      { "name": "Saint Petersburg", "fact": 342, "aliases": [ "saint petersburg", "st petersburg" ] },
+      { "name": "Osaka", "fact": 900, "aliases": [ "osaka" ] },
+      { "name": "Pittsburgh", "fact": 446, "aliases": [ "pittsburgh" ] },
+      { "name": "Stockholm", "fact": 300, "aliases": [ "stockholm" ] },
+      { "name": "Prague", "fact": 200, "aliases": [ "prague" ] }
+    ]
+  },
   {
     "id": "largest_countries_area",
     "category": "Geography: Countries",
@@ -188,221 +139,170 @@
     "fact_label": "Total area",
     "fact_unit": "km²",
     "answers": [
-      {
-        "name": "Russia",
-        "fact": 17098246,
-        "aliases": ["russia", "russian federation"]
-      },
-      {
-        "name": "Canada",
-        "fact": 9984670,
-        "aliases": ["canada"]
-      },
-      {
-        "name": "China",
-        "fact": 9596961,
-        "aliases": ["china", "prc", "people's republic of china"]
-      },
-      {
-        "name": "United States",
-        "fact": 9525067,
-        "aliases": ["united states", "usa", "us", "u.s.", "america", "united states of america"]
-      },
-      {
-        "name": "Brazil",
-        "fact": 8515767,
-        "aliases": ["brazil", "brasil"]
-      },
-      {
-        "name": "Australia",
-        "fact": 7692024,
-        "aliases": ["australia"]
-      },
-      {
-        "name": "India",
-        "fact": 3287263,
-        "aliases": ["india", "bharat"]
-      },
-      {
-        "name": "Argentina",
-        "fact": 2780400,
-        "aliases": ["argentina"]
-      },
-      {
-        "name": "Kazakhstan",
-        "fact": 2724900,
-        "aliases": ["kazakhstan"]
-      },
-      {
-        "name": "Algeria",
-        "fact": 2381741,
-        "aliases": ["algeria"]
-      }
+      { "name": "Russia", "fact": 17098246, "aliases": [ "russia", "russian federation" ] },
+      { "name": "Canada", "fact": 9984670, "aliases": [ "canada" ] },
+      { "name": "China", "fact": 9596961, "aliases": [ "china", "prc", "people's republic of china" ] },
+      { "name": "United States", "fact": 9525067, "aliases": [ "united states", "usa", "us", "u.s.", "america", "united states of america" ] },
+      { "name": "Brazil", "fact": 8515767, "aliases": [ "brazil", "brasil" ] },
+      { "name": "Australia", "fact": 7692024, "aliases": [ "australia" ] },
+      { "name": "India", "fact": 3287263, "aliases": [ "india", "bharat" ] },
+      { "name": "Argentina", "fact": 2780400, "aliases": [ "argentina" ] },
+      { "name": "Kazakhstan", "fact": 2724900, "aliases": [ "kazakhstan" ] },
+      { "name": "Algeria", "fact": 2381741, "aliases": [ "algeria" ] }
     ]
   },
-
   {
-  "id": "most_populous_countries",
-  "category": "Geography: Countries",
-  "prompt": "Top 10 most populous countries in the world.",
-  "fact_label": "Population",
-  "fact_unit": "million",
-  "answers": [
-    { "name": "India", "fact": 1430, "aliases": ["india"] },
-    { "name": "China", "fact": 1420, "aliases": ["china", "prc"] },
-    { "name": "United States", "fact": 340, "aliases": ["usa", "us", "america", "united states"] },
-    { "name": "Indonesia", "fact": 277, "aliases": ["indonesia"] },
-    { "name": "Pakistan", "fact": 240, "aliases": ["pakistan"] },
-    { "name": "Nigeria", "fact": 223, "aliases": ["nigeria"] },
-    { "name": "Brazil", "fact": 216, "aliases": ["brazil", "brasil"] },
-    { "name": "Bangladesh", "fact": 173, "aliases": ["bangladesh"] },
-    { "name": "Russia", "fact": 144, "aliases": ["russia", "russian federation"] },
-    { "name": "Mexico", "fact": 128, "aliases": ["mexico"] }
-  ]
-},
-
-{
-  "id": "largest_gdp_nominal",
-  "category": "Geography: Countries",
-  "prompt": "Top 10 largest economies by nominal GDP.",
-  "fact_label": "GDP",
-  "fact_unit": "trillion USD",
-  "answers": [
-    { "name": "United States", "fact": 26.9, "aliases": ["usa", "america"] },
-    { "name": "China", "fact": 17.7, "aliases": ["china", "prc"] },
-    { "name": "Germany", "fact": 4.4, "aliases": ["germany"] },
-    { "name": "Japan", "fact": 4.2, "aliases": ["japan"] },
-    { "name": "India", "fact": 3.7, "aliases": ["india"] },
-    { "name": "United Kingdom", "fact": 3.3, "aliases": ["uk", "britain", "great britain"] },
-    { "name": "France", "fact": 3.0, "aliases": ["france"] },
-    { "name": "Italy", "fact": 2.2, "aliases": ["italy"] },
-    { "name": "Canada", "fact": 2.1, "aliases": ["canada"] },
-    { "name": "Brazil", "fact": 2.1, "aliases": ["brazil"] }
-  ]
-},
-
-{
-  "id": "countries_most_islands",
-  "category": "Geography: Countries",
-  "prompt": "Top 10 countries with the most islands.",
-  "fact_label": "Islands",
-  "fact_unit": "",
-  "answers": [
-    { "name": "Sweden", "fact": 267570, "aliases": ["sweden"] },
-    { "name": "Norway", "fact": 239057, "aliases": ["norway"] },
-    { "name": "Finland", "fact": 178947, "aliases": ["finland"] },
-    { "name": "Canada", "fact": 52000, "aliases": ["canada"] },
-    { "name": "Indonesia", "fact": 17000, "aliases": ["indonesia"] },
-    { "name": "Australia", "fact": 8000, "aliases": ["australia"] },
-    { "name": "Philippines", "fact": 7641, "aliases": ["philippines"] },
-    { "name": "Japan", "fact": 6852, "aliases": ["japan"] },
-    { "name": "Chile", "fact": 5000, "aliases": ["chile"] },
-    { "name": "United States", "fact": 18000, "aliases": ["usa", "america"] }
-  ]
-},
-
-{
-  "id": "longest_coastlines",
-  "category": "Geography: Countries",
-  "prompt": "Top 10 countries with the longest coastlines.",
-  "fact_label": "Coastline length",
-  "fact_unit": "km",
-  "answers": [
-    { "name": "Canada", "fact": 202080, "aliases": ["canada"] },
-    { "name": "Norway", "fact": 58000, "aliases": ["norway"] },
-    { "name": "Indonesia", "fact": 54716, "aliases": ["indonesia"] },
-    { "name": "Russia", "fact": 37653, "aliases": ["russia"] },
-    { "name": "Philippines", "fact": 36289, "aliases": ["philippines"] },
-    { "name": "Japan", "fact": 29751, "aliases": ["japan"] },
-    { "name": "Australia", "fact": 25760, "aliases": ["australia"] },
-    { "name": "United States", "fact": 19924, "aliases": ["usa", "america"] },
-    { "name": "New Zealand", "fact": 15134, "aliases": ["new zealand"] },
-    { "name": "China", "fact": 14500, "aliases": ["china"] }
-  ]
-},
-
-{
-  "id": "most_official_languages",
-  "category": "Geography: Countries",
-  "prompt": "Top 10 countries with the most official languages.",
-  "fact_label": "Official languages",
-  "fact_unit": "",
-  "answers": [
-    { "name": "Bolivia", "fact": 37, "aliases": ["bolivia"] },
-    { "name": "India", "fact": 22, "aliases": ["india"] },
-    { "name": "South Africa", "fact": 11, "aliases": ["south africa"] },
-    { "name": "Zimbabwe", "fact": 16, "aliases": ["zimbabwe"] },
-    { "name": "Switzerland", "fact": 4, "aliases": ["switzerland"] },
-    { "name": "Belgium", "fact": 3, "aliases": ["belgium"] },
-    { "name": "Singapore", "fact": 4, "aliases": ["singapore"] },
-    { "name": "Philippines", "fact": 2, "aliases": ["philippines"] },
-    { "name": "Canada", "fact": 2, "aliases": ["canada"] },
-    { "name": "Finland", "fact": 2, "aliases": ["finland"] }
-  ]
-},
-
-{
-  "id": "largest_desert_area_countries",
-  "category": "Geography: Countries",
-  "prompt": "Top 10 countries with the largest desert areas within their borders.",
-  "fact_label": "Major desert area",
-  "fact_unit": "km²",
-  "answers": [
-    { "name": "Algeria", "fact": 2000000, "aliases": ["algeria"] },
-    { "name": "Saudi Arabia", "fact": 2300000, "aliases": ["saudi arabia"] },
-    { "name": "Australia", "fact": 1370000, "aliases": ["australia"] },
-    { "name": "Libya", "fact": 1800000, "aliases": ["libya"] },
-    { "name": "Egypt", "fact": 900000, "aliases": ["egypt"] },
-    { "name": "Sudan", "fact": 1500000, "aliases": ["sudan"] },
-    { "name": "Iran", "fact": 400000, "aliases": ["iran"] },
-    { "name": "Pakistan", "fact": 500000, "aliases": ["pakistan"] },
-    { "name": "China", "fact": 1300000, "aliases": ["china"] },
-    { "name": "Mongolia", "fact": 1000000, "aliases": ["mongolia"] }
-  ]
-},
-
-{
-  "id": "most_time_zones",
-  "category": "Geography: Countries",
-  "prompt": "Top 10 countries spanning the most time zones (including overseas territories).",
-  "fact_label": "Time zones",
-  "fact_unit": "",
-  "answers": [
-    { "name": "France", "fact": 12, "aliases": ["france"] },
-    { "name": "United States", "fact": 11, "aliases": ["usa", "america"] },
-    { "name": "Russia", "fact": 11, "aliases": ["russia"] },
-    { "name": "United Kingdom", "fact": 9, "aliases": ["uk", "britain"] },
-    { "name": "Australia", "fact": 8, "aliases": ["australia"] },
-    { "name": "Canada", "fact": 6, "aliases": ["canada"] },
-    { "name": "Brazil", "fact": 4, "aliases": ["brazil"] },
-    { "name": "Mexico", "fact": 4, "aliases": ["mexico"] },
-    { "name": "New Zealand", "fact": 3, "aliases": ["new zealand"] },
-    { "name": "Indonesia", "fact": 3, "aliases": ["indonesia"] }
-  ]
-},
-
-{
-  "id": "most_time_zones",
-  "category": "Geography: Countries",
-  "prompt": "Top 10 countries spanning the most time zones (including overseas territories).",
-  "fact_label": "Time zones",
-  "fact_unit": "",
-  "answers": [
-    { "name": "France", "fact": 12, "aliases": ["france"] },
-    { "name": "United States", "fact": 11, "aliases": ["usa", "america"] },
-    { "name": "Russia", "fact": 11, "aliases": ["russia"] },
-    { "name": "United Kingdom", "fact": 9, "aliases": ["uk", "britain"] },
-    { "name": "Australia", "fact": 8, "aliases": ["australia"] },
-    { "name": "Canada", "fact": 6, "aliases": ["canada"] },
-    { "name": "Brazil", "fact": 4, "aliases": ["brazil"] },
-    { "name": "Mexico", "fact": 4, "aliases": ["mexico"] },
-    { "name": "New Zealand", "fact": 3, "aliases": ["new zealand"] },
-    { "name": "Indonesia", "fact": 3, "aliases": ["indonesia"] }
-  ]
-},
-
-
-
+    "id": "most_populous_countries",
+    "category": "Geography: Countries",
+    "prompt": "Top 10 most populous countries in the world.",
+    "fact_label": "Population",
+    "fact_unit": "million",
+    "answers": [
+      { "name": "India", "fact": 1430, "aliases": [ "india" ] },
+      { "name": "China", "fact": 1420, "aliases": [ "china", "prc" ] },
+      { "name": "United States", "fact": 340, "aliases": [ "usa", "us", "america", "united states" ] },
+      { "name": "Indonesia", "fact": 277, "aliases": [ "indonesia" ] },
+      { "name": "Pakistan", "fact": 240, "aliases": [ "pakistan" ] },
+      { "name": "Nigeria", "fact": 223, "aliases": [ "nigeria" ] },
+      { "name": "Brazil", "fact": 216, "aliases": [ "brazil", "brasil" ] },
+      { "name": "Bangladesh", "fact": 173, "aliases": [ "bangladesh" ] },
+      { "name": "Russia", "fact": 144, "aliases": [ "russia", "russian federation" ] },
+      { "name": "Mexico", "fact": 128, "aliases": [ "mexico" ] }
+    ]
+  },
+  {
+    "id": "largest_gdp_nominal",
+    "category": "Geography: Countries",
+    "prompt": "Top 10 largest economies by nominal GDP.",
+    "fact_label": "GDP",
+    "fact_unit": "trillion USD",
+    "answers": [
+      { "name": "United States", "fact": 26.9, "aliases": [ "usa", "america" ] },
+      { "name": "China", "fact": 17.7, "aliases": [ "china", "prc" ] },
+      { "name": "Germany", "fact": 4.4, "aliases": [ "germany" ] },
+      { "name": "Japan", "fact": 4.2, "aliases": [ "japan" ] },
+      { "name": "India", "fact": 3.7, "aliases": [ "india" ] },
+      { "name": "United Kingdom", "fact": 3.3, "aliases": [ "uk", "britain", "great britain" ] },
+      { "name": "France", "fact": 3.0, "aliases": [ "france" ] },
+      { "name": "Italy", "fact": 2.2, "aliases": [ "italy" ] },
+      { "name": "Canada", "fact": 2.1, "aliases": [ "canada" ] },
+      { "name": "Brazil", "fact": 2.1, "aliases": [ "brazil" ] }
+    ]
+  },
+  {
+    "id": "countries_most_islands",
+    "category": "Geography: Countries",
+    "prompt": "Top 10 countries with the most islands.",
+    "fact_label": "Islands",
+    "fact_unit": "",
+    "answers": [
+      { "name": "Sweden", "fact": 267570, "aliases": [ "sweden" ] },
+      { "name": "Norway", "fact": 239057, "aliases": [ "norway" ] },
+      { "name": "Finland", "fact": 178947, "aliases": [ "finland" ] },
+      { "name": "Canada", "fact": 52000, "aliases": [ "canada" ] },
+      { "name": "Indonesia", "fact": 17000, "aliases": [ "indonesia" ] },
+      { "name": "Australia", "fact": 8000, "aliases": [ "australia" ] },
+      { "name": "Philippines", "fact": 7641, "aliases": [ "philippines" ] },
+      { "name": "Japan", "fact": 6852, "aliases": [ "japan" ] },
+      { "name": "Chile", "fact": 5000, "aliases": [ "chile" ] },
+      { "name": "United States", "fact": 18000, "aliases": [ "usa", "america" ] }
+    ]
+  },
+  {
+    "id": "longest_coastlines",
+    "category": "Geography: Countries",
+    "prompt": "Top 10 countries with the longest coastlines.",
+    "fact_label": "Coastline length",
+    "fact_unit": "km",
+    "answers": [
+      { "name": "Canada", "fact": 202080, "aliases": [ "canada" ] },
+      { "name": "Norway", "fact": 58000, "aliases": [ "norway" ] },
+      { "name": "Indonesia", "fact": 54716, "aliases": [ "indonesia" ] },
+      { "name": "Russia", "fact": 37653, "aliases": [ "russia" ] },
+      { "name": "Philippines", "fact": 36289, "aliases": [ "philippines" ] },
+      { "name": "Japan", "fact": 29751, "aliases": [ "japan" ] },
+      { "name": "Australia", "fact": 25760, "aliases": [ "australia" ] },
+      { "name": "United States", "fact": 19924, "aliases": [ "usa", "america" ] },
+      { "name": "New Zealand", "fact": 15134, "aliases": [ "new zealand" ] },
+      { "name": "China", "fact": 14500, "aliases": [ "china" ] }
+    ]
+  },
+  {
+    "id": "most_official_languages",
+    "category": "Geography: Countries",
+    "prompt": "Top 10 countries with the most official languages.",
+    "fact_label": "Official languages",
+    "fact_unit": "",
+    "answers": [
+      { "name": "Bolivia", "fact": 37, "aliases": [ "bolivia" ] },
+      { "name": "India", "fact": 22, "aliases": [ "india" ] },
+      { "name": "South Africa", "fact": 11, "aliases": [ "south africa" ] },
+      { "name": "Zimbabwe", "fact": 16, "aliases": [ "zimbabwe" ] },
+      { "name": "Switzerland", "fact": 4, "aliases": [ "switzerland" ] },
+      { "name": "Belgium", "fact": 3, "aliases": [ "belgium" ] },
+      { "name": "Singapore", "fact": 4, "aliases": [ "singapore" ] },
+      { "name": "Philippines", "fact": 2, "aliases": [ "philippines" ] },
+      { "name": "Canada", "fact": 2, "aliases": [ "canada" ] },
+      { "name": "Finland", "fact": 2, "aliases": [ "finland" ] }
+    ]
+  },
+  {
+    "id": "largest_desert_area_countries",
+    "category": "Geography: Countries",
+    "prompt": "Top 10 countries with the largest desert areas within their borders.",
+    "fact_label": "Major desert area",
+    "fact_unit": "km²",
+    "answers": [
+      { "name": "Algeria", "fact": 2000000, "aliases": [ "algeria" ] },
+      { "name": "Saudi Arabia", "fact": 2300000, "aliases": [ "saudi arabia" ] },
+      { "name": "Australia", "fact": 1370000, "aliases": [ "australia" ] },
+      { "name": "Libya", "fact": 1800000, "aliases": [ "libya" ] },
+      { "name": "Egypt", "fact": 900000, "aliases": [ "egypt" ] },
+      { "name": "Sudan", "fact": 1500000, "aliases": [ "sudan" ] },
+      { "name": "Iran", "fact": 400000, "aliases": [ "iran" ] },
+      { "name": "Pakistan", "fact": 500000, "aliases": [ "pakistan" ] },
+      { "name": "China", "fact": 1300000, "aliases": [ "china" ] },
+      { "name": "Mongolia", "fact": 1000000, "aliases": [ "mongolia" ] }
+    ]
+  },
+  {
+    "id": "most_time_zones",
+    "category": "Geography: Countries",
+    "prompt": "Top 10 countries spanning the most time zones (including overseas territories).",
+    "fact_label": "Time zones",
+    "fact_unit": "",
+    "answers": [
+      { "name": "France", "fact": 12, "aliases": [ "france" ] },
+      { "name": "United States", "fact": 11, "aliases": [ "usa", "america" ] },
+      { "name": "Russia", "fact": 11, "aliases": [ "russia" ] },
+      { "name": "United Kingdom", "fact": 9, "aliases": [ "uk", "britain" ] },
+      { "name": "Australia", "fact": 8, "aliases": [ "australia" ] },
+      { "name": "Canada", "fact": 6, "aliases": [ "canada" ] },
+      { "name": "Brazil", "fact": 4, "aliases": [ "brazil" ] },
+      { "name": "Mexico", "fact": 4, "aliases": [ "mexico" ] },
+      { "name": "New Zealand", "fact": 3, "aliases": [ "new zealand" ] },
+      { "name": "Indonesia", "fact": 3, "aliases": [ "indonesia" ] }
+    ]
+  },
+  {
+    "id": "most_time_zones",
+    "category": "Geography: Countries",
+    "prompt": "Top 10 countries spanning the most time zones (including overseas territories).",
+    "fact_label": "Time zones",
+    "fact_unit": "",
+    "answers": [
+      { "name": "France", "fact": 12, "aliases": [ "france" ] },
+      { "name": "United States", "fact": 11, "aliases": [ "usa", "america" ] },
+      { "name": "Russia", "fact": 11, "aliases": [ "russia" ] },
+      { "name": "United Kingdom", "fact": 9, "aliases": [ "uk", "britain" ] },
+      { "name": "Australia", "fact": 8, "aliases": [ "australia" ] },
+      { "name": "Canada", "fact": 6, "aliases": [ "canada" ] },
+      { "name": "Brazil", "fact": 4, "aliases": [ "brazil" ] },
+      { "name": "Mexico", "fact": 4, "aliases": [ "mexico" ] },
+      { "name": "New Zealand", "fact": 3, "aliases": [ "new zealand" ] },
+      { "name": "Indonesia", "fact": 3, "aliases": [ "indonesia" ] }
+    ]
+  },
   {
     "id": "highest_mountains",
     "category": "Nature: Mountains",
@@ -410,59 +310,18 @@
     "fact_label": "Elevation",
     "fact_unit": "m",
     "answers": [
-      {
-        "name": "Mount Everest",
-        "fact": 8848.86,
-        "aliases": ["everest", "mt everest", "sagarmatha", "chomolungma"]
-      },
-      {
-        "name": "K2",
-        "fact": 8611,
-        "aliases": ["k2", "mount k2", "chhogori"]
-      },
-      {
-        "name": "Kangchenjunga",
-        "fact": 8586,
-        "aliases": ["kangchenjunga", "kanchenjunga"]
-      },
-      {
-        "name": "Lhotse",
-        "fact": 8516,
-        "aliases": ["lhotse"]
-      },
-      {
-        "name": "Makalu",
-        "fact": 8485,
-        "aliases": ["makalu"]
-      },
-      {
-        "name": "Cho Oyu",
-        "fact": 8188,
-        "aliases": ["cho oyu", "cho-oyu"]
-      },
-      {
-        "name": "Dhaulagiri I",
-        "fact": 8167,
-        "aliases": ["dhaulagiri", "dhaulagiri 1"]
-      },
-      {
-        "name": "Manaslu",
-        "fact": 8163,
-        "aliases": ["manaslu"]
-      },
-      {
-        "name": "Nanga Parbat",
-        "fact": 8126,
-        "aliases": ["nanga parbat", "killer mountain"]
-      },
-      {
-        "name": "Annapurna I",
-        "fact": 8091,
-        "aliases": ["annapurna", "annapurna 1"]
-      }
+      { "name": "Mount Everest", "fact": 8848.86, "aliases": [ "everest", "mt everest", "sagarmatha", "chomolungma" ] },
+      { "name": "K2", "fact": 8611, "aliases": [ "k2", "mount k2", "chhogori" ] },
+      { "name": "Kangchenjunga", "fact": 8586, "aliases": [ "kangchenjunga", "kanchenjunga" ] },
+      { "name": "Lhotse", "fact": 8516, "aliases": [ "lhotse" ] },
+      { "name": "Makalu", "fact": 8485, "aliases": [ "makalu" ] },
+      { "name": "Cho Oyu", "fact": 8188, "aliases": [ "cho oyu", "cho-oyu" ] },
+      { "name": "Dhaulagiri I", "fact": 8167, "aliases": [ "dhaulagiri", "dhaulagiri 1" ] },
+      { "name": "Manaslu", "fact": 8163, "aliases": [ "manaslu" ] },
+      { "name": "Nanga Parbat", "fact": 8126, "aliases": [ "nanga parbat", "killer mountain" ] },
+      { "name": "Annapurna I", "fact": 8091, "aliases": [ "annapurna", "annapurna 1" ] }
     ]
   },
-
   {
     "id": "longest_rivers",
     "category": "Nature: Rivers",
@@ -470,219 +329,161 @@
     "fact_label": "Approx. length",
     "fact_unit": "km",
     "answers": [
-      {
-        "name": "Nile",
-        "fact": 6650,
-        "aliases": ["nile", "river nile"]
-      },
-      {
-        "name": "Amazon",
-        "fact": 6400,
-        "aliases": ["amazon", "amazon river", "rio amazonas"]
-      },
-      {
-        "name": "Yangtze",
-        "fact": 6300,
-        "aliases": ["yangtze", "chang jiang"]
-      },
-      {
-        "name": "Mississippi–Missouri",
-        "fact": 6275,
-        "aliases": ["mississippi", "missouri river", "mississippi missouri"]
-      },
-      {
-        "name": "Yenisei",
-        "fact": 5539,
-        "aliases": ["yenisei", "enisey"]
-      },
-      {
-        "name": "Yellow River",
-        "fact": 5464,
-        "aliases": ["yellow river", "huang he"]
-      },
-      {
-        "name": "Ob–Irtysh",
-        "fact": 5410,
-        "aliases": ["ob", "irtysh"]
-      },
-      {
-        "name": "Paraná",
-        "fact": 4880,
-        "aliases": ["parana", "paraná"]
-      },
-      {
-        "name": "Congo",
-        "fact": 4700,
-        "aliases": ["congo", "zaire"]
-      },
-      {
-        "name": "Amur",
-        "fact": 4444,
-        "aliases": ["amur", "heilongjiang"]
-      }
+      { "name": "Nile", "fact": 6650, "aliases": [ "nile", "river nile" ] },
+      { "name": "Amazon", "fact": 6400, "aliases": [ "amazon", "amazon river", "rio amazonas" ] },
+      { "name": "Yangtze", "fact": 6300, "aliases": [ "yangtze", "chang jiang" ] },
+      { "name": "Mississippi–Missouri", "fact": 6275, "aliases": [ "mississippi", "missouri river", "mississippi missouri" ] },
+      { "name": "Yenisei", "fact": 5539, "aliases": [ "yenisei", "enisey" ] },
+      { "name": "Yellow River", "fact": 5464, "aliases": [ "yellow river", "huang he" ] },
+      { "name": "Ob–Irtysh", "fact": 5410, "aliases": [ "ob", "irtysh" ] },
+      { "name": "Paraná", "fact": 4880, "aliases": [ "parana", "paraná" ] },
+      { "name": "Congo", "fact": 4700, "aliases": [ "congo", "zaire" ] },
+      { "name": "Amur", "fact": 4444, "aliases": [ "amur", "heilongjiang" ] }
     ]
   },
-
-{
-  "id": "elements_earth_crust",
-  "category": "Science: Lite",
-  "prompt": "Top 10 most abundant elements in Earth's crust (by mass).",
-  "fact_label": "Abundance",
-  "fact_unit": "%",
-  "answers": [
-    { "name": "Oxygen", "fact": 46.6, "aliases": ["oxygen", "o"] },
-    { "name": "Silicon", "fact": 27.7, "aliases": ["silicon", "si"] },
-    { "name": "Aluminum", "fact": 8.1, "aliases": ["aluminium", "aluminum", "al"] },
-    { "name": "Iron", "fact": 5.0, "aliases": ["iron", "fe"] },
-    { "name": "Calcium", "fact": 3.6, "aliases": ["calcium", "ca"] },
-    { "name": "Sodium", "fact": 2.8, "aliases": ["sodium", "na"] },
-    { "name": "Potassium", "fact": 2.6, "aliases": ["potassium", "k"] },
-    { "name": "Magnesium", "fact": 2.1, "aliases": ["magnesium", "mg"] },
-    { "name": "Titanium", "fact": 0.6, "aliases": ["titanium", "ti"] },
-    { "name": "Hydrogen", "fact": 0.14, "aliases": ["hydrogen", "h"] }
-  ]
-},
-
-{
-  "id": "largest_planets",
-  "category": "Science: Lite",
-  "prompt": "Top 8 planets in the Solar System ranked by diameter (largest to smallest).",
-  "fact_label": "Diameter",
-  "fact_unit": "km",
-  "answers": [
-    { "name": "Jupiter", "fact": 142984, "aliases": ["jupiter"] },
-    { "name": "Saturn", "fact": 120536, "aliases": ["saturn"] },
-    { "name": "Uranus", "fact": 51118, "aliases": ["uranus"] },
-    { "name": "Neptune", "fact": 49528, "aliases": ["neptune"] },
-    { "name": "Earth", "fact": 12742, "aliases": ["earth"] },
-    { "name": "Venus", "fact": 12104, "aliases": ["venus"] },
-    { "name": "Mars", "fact": 6779, "aliases": ["mars"] },
-    { "name": "Mercury", "fact": 4879, "aliases": ["mercury"] }
-  ]
-},
-
-{
-  "id": "mass_extinctions",
-  "category": "Science: Lite",
-  "prompt": "Top 5 largest mass extinction events by estimated species loss.",
-  "fact_label": "Species lost",
-  "fact_unit": "%",
-  "answers": [
-    { "name": "Permian–Triassic", "fact": 96, "aliases": ["permian triassic", "great dying"] },
-    { "name": "Ordovician–Silurian", "fact": 85, "aliases": ["ordovician silurian"] },
-    { "name": "Late Devonian", "fact": 75, "aliases": ["devonian extinction"] },
-    { "name": "Triassic–Jurassic", "fact": 80, "aliases": ["triassic jurassic"] },
-    { "name": "Cretaceous–Paleogene", "fact": 75, "aliases": ["k pg", "k-pg", "cretaceous paleogene", "dinosaur extinction"] }
-  ]
-},
-
-{
-  "id": "elements_universe",
-  "category": "Science: Medium",
-  "prompt": "Top 10 most abundant elements in the observable universe.",
-  "fact_label": "Abundance",
-  "fact_unit": "%",
-  "answers": [
-    { "name": "Hydrogen", "fact": 73, "aliases": ["hydrogen", "h"] },
-    { "name": "Helium", "fact": 25, "aliases": ["helium", "he"] },
-    { "name": "Oxygen", "fact": 1, "aliases": ["oxygen"] },
-    { "name": "Carbon", "fact": 0.5, "aliases": ["carbon"] },
-    { "name": "Neon", "fact": 0.13, "aliases": ["neon"] },
-    { "name": "Iron", "fact": 0.11, "aliases": ["iron"] },
-    { "name": "Nitrogen", "fact": 0.1, "aliases": ["nitrogen"] },
-    { "name": "Silicon", "fact": 0.07, "aliases": ["silicon"] },
-    { "name": "Magnesium", "fact": 0.06, "aliases": ["magnesium"] },
-    { "name": "Sulfur", "fact": 0.05, "aliases": ["sulfur", "sulphur"] }
-  ]
-},
-
-{
-  "id": "largest_particle_accelerators",
-  "category": "Science: Medium",
-  "prompt": "Top 10 particle accelerators ranked by maximum collision energy.",
-  "fact_label": "Energy",
-  "fact_unit": "TeV",
-  "answers": [
-    { "name": "Large Hadron Collider", "fact": 13, "aliases": ["lhc"] },
-    { "name": "Tevatron", "fact": 1.96, "aliases": ["tevatron"] },
-    { "name": "RHIC", "fact": 0.51, "aliases": ["rhic"] },
-    { "name": "SPS (Super Proton Synchrotron)", "fact": 0.45, "aliases": ["sps"] },
-    { "name": "KEKB", "fact": 0.008, "aliases": ["kekb"] },
-    { "name": "SuperKEKB", "fact": 0.01, "aliases": ["superkekb"] },
-    { "name": "LEP", "fact": 0.2, "aliases": ["lep"] },
-    { "name": "SLAC", "fact": 0.05, "aliases": ["slac"] },
-    { "name": "FAIR", "fact": 0.03, "aliases": ["fair accelerator"] },
-    { "name": "J-PARC", "fact": 0.03, "aliases": ["j-parc", "jparc"] }
-  ]
-},
-
-{
-  "id": "largest_brains",
-  "category": "Science: Medium",
-  "prompt": "Top 10 animals ranked by absolute brain mass.",
-  "fact_label": "Brain mass",
-  "fact_unit": "kg",
-  "answers": [
-    { "name": "Sperm Whale", "fact": 7.8, "aliases": ["sperm whale"] },
-    { "name": "Killer Whale", "fact": 6.0, "aliases": ["orca", "killer whale"] },
-    { "name": "African Elephant", "fact": 5.0, "aliases": ["african elephant"] },
-    { "name": "Asian Elephant", "fact": 4.5, "aliases": ["asian elephant"] },
-    { "name": "Pilot Whale", "fact": 3.5, "aliases": ["pilot whale"] },
-    { "name": "Hippopotamus", "fact": 1.6, "aliases": ["hippo", "hippopotamus"] },
-    { "name": "Human", "fact": 1.4, "aliases": ["human"] },
-    { "name": "Bottlenose Dolphin", "fact": 1.3, "aliases": ["dolphin", "bottlenose dolphin"] },
-    { "name": "Horse", "fact": 0.6, "aliases": ["horse"] },
-    { "name": "Chimpanzee", "fact": 0.4, "aliases": ["chimp", "chimpanzee"] }
-  ]
-},
-
-{
-  "id": "most_massive_stars",
-  "category": "Science: Expert",
-  "prompt": "Top 10 most massive known stars.",
-  "fact_label": "Mass",
-  "fact_unit": "solar masses",
-  "answers": [
-    { "name": "R136a1", "fact": 215, "aliases": ["r136a1"] },
-    { "name": "R136a2", "fact": 195, "aliases": ["r136a2"] },
-    { "name": "Eta Carinae", "fact": 150, "aliases": ["eta carinae"] },
-    { "name": "WR 102ka", "fact": 150, "aliases": ["wr 102ka"] },
-    { "name": "WR 25", "fact": 125, "aliases": ["wr 25"] },
-    { "name": "NGC 3603-A1", "fact": 116, "aliases": ["ngc 3603 a1"] },
-    { "name": "WR 22", "fact": 78, "aliases": ["wr 22"] },
-    { "name": "Pistol Star", "fact": 100, "aliases": ["pistol star"] },
-    { "name": "WR 20a", "fact": 82, "aliases": ["wr 20a"] },
-    { "name": "VFTS 682", "fact": 150, "aliases": ["vfts 682"] }
-  ]
-},
-
-{
-  "id": "strongest_magnetic_fields",
-  "category": "Science: Expert",
-  "prompt": "Top 10 astronomical objects with the strongest magnetic fields.",
-  "fact_label": "Magnetic field",
-  "fact_unit": "Tesla",
-  "answers": [
-    { "name": "Magnetar", "fact": 10000000000, "aliases": ["magnetar"] },
-    { "name": "Neutron Star", "fact": 100000000, "aliases": ["neutron star"] },
-    { "name": "White Dwarf", "fact": 100000, "aliases": ["white dwarf"] },
-    { "name": "Sunspot", "fact": 0.4, "aliases": ["sunspot"] },
-    { "name": "Jupiter", "fact": 0.00042, "aliases": ["jupiter"] },
-    { "name": "Earth", "fact": 0.00005, "aliases": ["earth"] },
-    { "name": "Saturn", "fact": 0.00002, "aliases": ["saturn"] },
-    { "name": "Mercury", "fact": 0.000003, "aliases": ["mercury"] },
-    { "name": "Ganymede", "fact": 0.000001, "aliases": ["ganymede"] },
-    { "name": "Mars", "fact": 0.00000002, "aliases": ["mars"] }
-  ]
-}
-
-
-
-
-
-
-
-
-
-
+  {
+    "id": "elements_earth_crust",
+    "category": "Science: Lite",
+    "prompt": "Top 10 most abundant elements in Earth's crust (by mass).",
+    "fact_label": "Abundance",
+    "fact_unit": "%",
+    "answers": [
+      { "name": "Oxygen", "fact": 46.6, "aliases": [ "oxygen", "o" ] },
+      { "name": "Silicon", "fact": 27.7, "aliases": [ "silicon", "si" ] },
+      { "name": "Aluminum", "fact": 8.1, "aliases": [ "aluminium", "aluminum", "al" ] },
+      { "name": "Iron", "fact": 5.0, "aliases": [ "iron", "fe" ] },
+      { "name": "Calcium", "fact": 3.6, "aliases": [ "calcium", "ca" ] },
+      { "name": "Sodium", "fact": 2.8, "aliases": [ "sodium", "na" ] },
+      { "name": "Potassium", "fact": 2.6, "aliases": [ "potassium", "k" ] },
+      { "name": "Magnesium", "fact": 2.1, "aliases": [ "magnesium", "mg" ] },
+      { "name": "Titanium", "fact": 0.6, "aliases": [ "titanium", "ti" ] },
+      { "name": "Hydrogen", "fact": 0.14, "aliases": [ "hydrogen", "h" ] }
+    ]
+  },
+  {
+    "id": "largest_planets",
+    "category": "Science: Lite",
+    "prompt": "Top 8 planets in the Solar System ranked by diameter (largest to smallest).",
+    "fact_label": "Diameter",
+    "fact_unit": "km",
+    "answers": [
+      { "name": "Jupiter", "fact": 142984, "aliases": [ "jupiter" ] },
+      { "name": "Saturn", "fact": 120536, "aliases": [ "saturn" ] },
+      { "name": "Uranus", "fact": 51118, "aliases": [ "uranus" ] },
+      { "name": "Neptune", "fact": 49528, "aliases": [ "neptune" ] },
+      { "name": "Earth", "fact": 12742, "aliases": [ "earth" ] },
+      { "name": "Venus", "fact": 12104, "aliases": [ "venus" ] },
+      { "name": "Mars", "fact": 6779, "aliases": [ "mars" ] },
+      { "name": "Mercury", "fact": 4879, "aliases": [ "mercury" ] }
+    ]
+  },
+  {
+    "id": "mass_extinctions",
+    "category": "Science: Lite",
+    "prompt": "Top 5 largest mass extinction events by estimated species loss.",
+    "fact_label": "Species lost",
+    "fact_unit": "%",
+    "answers": [
+      { "name": "Permian–Triassic", "fact": 96, "aliases": [ "permian triassic", "great dying" ] },
+      { "name": "Ordovician–Silurian", "fact": 85, "aliases": [ "ordovician silurian" ] },
+      { "name": "Late Devonian", "fact": 75, "aliases": [ "devonian extinction" ] },
+      { "name": "Triassic–Jurassic", "fact": 80, "aliases": [ "triassic jurassic" ] },
+      { "name": "Cretaceous–Paleogene", "fact": 75, "aliases": [ "k pg", "k-pg", "cretaceous paleogene", "dinosaur extinction" ] }
+    ]
+  },
+  {
+    "id": "elements_universe",
+    "category": "Science: Medium",
+    "prompt": "Top 10 most abundant elements in the observable universe.",
+    "fact_label": "Abundance",
+    "fact_unit": "%",
+    "answers": [
+      { "name": "Hydrogen", "fact": 73, "aliases": [ "hydrogen", "h" ] },
+      { "name": "Helium", "fact": 25, "aliases": [ "helium", "he" ] },
+      { "name": "Oxygen", "fact": 1, "aliases": [ "oxygen" ] },
+      { "name": "Carbon", "fact": 0.5, "aliases": [ "carbon" ] },
+      { "name": "Neon", "fact": 0.13, "aliases": [ "neon" ] },
+      { "name": "Iron", "fact": 0.11, "aliases": [ "iron" ] },
+      { "name": "Nitrogen", "fact": 0.1, "aliases": [ "nitrogen" ] },
+      { "name": "Silicon", "fact": 0.07, "aliases": [ "silicon" ] },
+      { "name": "Magnesium", "fact": 0.06, "aliases": [ "magnesium" ] },
+      { "name": "Sulfur", "fact": 0.05, "aliases": [ "sulfur", "sulphur" ] }
+    ]
+  },
+  {
+    "id": "largest_particle_accelerators",
+    "category": "Science: Medium",
+    "prompt": "Top 10 particle accelerators ranked by maximum collision energy.",
+    "fact_label": "Energy",
+    "fact_unit": "TeV",
+    "answers": [
+      { "name": "Large Hadron Collider", "fact": 13, "aliases": [ "lhc" ] },
+      { "name": "Tevatron", "fact": 1.96, "aliases": [ "tevatron" ] },
+      { "name": "RHIC", "fact": 0.51, "aliases": [ "rhic" ] },
+      { "name": "SPS (Super Proton Synchrotron)", "fact": 0.45, "aliases": [ "sps" ] },
+      { "name": "KEKB", "fact": 0.008, "aliases": [ "kekb" ] },
+      { "name": "SuperKEKB", "fact": 0.01, "aliases": [ "superkekb" ] },
+      { "name": "LEP", "fact": 0.2, "aliases": [ "lep" ] },
+      { "name": "SLAC", "fact": 0.05, "aliases": [ "slac" ] },
+      { "name": "FAIR", "fact": 0.03, "aliases": [ "fair accelerator" ] },
+      { "name": "J-PARC", "fact": 0.03, "aliases": [ "j-parc", "jparc" ] }
+    ]
+  },
+  {
+    "id": "largest_brains",
+    "category": "Science: Medium",
+    "prompt": "Top 10 animals ranked by absolute brain mass.",
+    "fact_label": "Brain mass",
+    "fact_unit": "kg",
+    "answers": [
+      { "name": "Sperm Whale", "fact": 7.8, "aliases": [ "sperm whale" ] },
+      { "name": "Killer Whale", "fact": 6.0, "aliases": [ "orca", "killer whale" ] },
+      { "name": "African Elephant", "fact": 5.0, "aliases": [ "african elephant" ] },
+      { "name": "Asian Elephant", "fact": 4.5, "aliases": [ "asian elephant" ] },
+      { "name": "Pilot Whale", "fact": 3.5, "aliases": [ "pilot whale" ] },
+      { "name": "Hippopotamus", "fact": 1.6, "aliases": [ "hippo", "hippopotamus" ] },
+      { "name": "Human", "fact": 1.4, "aliases": [ "human" ] },
+      { "name": "Bottlenose Dolphin", "fact": 1.3, "aliases": [ "dolphin", "bottlenose dolphin" ] },
+      { "name": "Horse", "fact": 0.6, "aliases": [ "horse" ] },
+      { "name": "Chimpanzee", "fact": 0.4, "aliases": [ "chimp", "chimpanzee" ] }
+    ]
+  },
+  {
+    "id": "most_massive_stars",
+    "category": "Science: Expert",
+    "prompt": "Top 10 most massive known stars.",
+    "fact_label": "Mass",
+    "fact_unit": "solar masses",
+    "answers": [
+      { "name": "R136a1", "fact": 215, "aliases": [ "r136a1" ] },
+      { "name": "R136a2", "fact": 195, "aliases": [ "r136a2" ] },
+      { "name": "Eta Carinae", "fact": 150, "aliases": [ "eta carinae" ] },
+      { "name": "WR 102ka", "fact": 150, "aliases": [ "wr 102ka" ] },
+      { "name": "WR 25", "fact": 125, "aliases": [ "wr 25" ] },
+      { "name": "NGC 3603-A1", "fact": 116, "aliases": [ "ngc 3603 a1" ] },
+      { "name": "WR 22", "fact": 78, "aliases": [ "wr 22" ] },
+      { "name": "Pistol Star", "fact": 100, "aliases": [ "pistol star" ] },
+      { "name": "WR 20a", "fact": 82, "aliases": [ "wr 20a" ] },
+      { "name": "VFTS 682", "fact": 150, "aliases": [ "vfts 682" ] }
+    ]
+  },
+  {
+    "id": "strongest_magnetic_fields",
+    "category": "Science: Expert",
+    "prompt": "Top 10 astronomical objects with the strongest magnetic fields.",
+    "fact_label": "Magnetic field",
+    "fact_unit": "Tesla",
+    "answers": [
+      { "name": "Magnetar", "fact": 10000000000, "aliases": [ "magnetar" ] },
+      { "name": "Neutron Star", "fact": 100000000, "aliases": [ "neutron star" ] },
+      { "name": "White Dwarf", "fact": 100000, "aliases": [ "white dwarf" ] },
+      { "name": "Sunspot", "fact": 0.4, "aliases": [ "sunspot" ] },
+      { "name": "Jupiter", "fact": 0.00042, "aliases": [ "jupiter" ] },
+      { "name": "Earth", "fact": 5e-05, "aliases": [ "earth" ] },
+      { "name": "Saturn", "fact": 2e-05, "aliases": [ "saturn" ] },
+      { "name": "Mercury", "fact": 3e-06, "aliases": [ "mercury" ] },
+      { "name": "Ganymede", "fact": 1e-06, "aliases": [ "ganymede" ] },
+      { "name": "Mars", "fact": 2e-08, "aliases": [ "mars" ] }
+    ]
+  }
 ]
