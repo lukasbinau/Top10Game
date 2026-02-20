@@ -31,6 +31,8 @@ def normalize(s: str) -> str:
     return s
 
 
+MAX_ROUNDS = 10
+
 # Keep JS proxies alive (critical!)
 PROXIES = []
 
@@ -95,6 +97,7 @@ class GameState:
     teams: List[str] = field(default_factory=list)
     scores: Dict[str, int] = field(default_factory=dict)
     round_num: int = 0
+    completed_rounds: int = 0    # only incremented when a round is scored (not skipped)
 
     all_prompts: List[Prompt] = field(default_factory=list)   # everything from file
     prompts: List[Prompt] = field(default_factory=list)       # filtered by pack
@@ -177,10 +180,15 @@ def apply_pack_filter():
 
 
 def pick_next_prompt() -> Prompt:
+    # Try selected category first
     available = [p for p in STATE.prompts if p.id not in STATE.used_prompt_ids]
     if not available:
+        # Fallback: pull from ALL categories
+        available = [p for p in STATE.all_prompts if p.id not in STATE.used_prompt_ids]
+    if not available:
+        # Ultimate fallback: reset used set
         STATE.used_prompt_ids = set()
-        available = STATE.prompts[:]
+        available = STATE.all_prompts[:]
     p = random.choice(available)
     STATE.used_prompt_ids.add(p.id)
     return p
@@ -215,7 +223,7 @@ def render_scoreboard():
         sb.appendChild(row)
 
 def set_round_ui():
-    qs("#round-pill").innerText = f"Round {STATE.round_num}"
+    qs("#round-pill").innerText = f"Round {STATE.completed_rounds + 1} / {MAX_ROUNDS}"
     qs("#prompt").innerText = STATE.current_prompt.prompt if STATE.current_prompt else "—"
     set_team_ui()
 
@@ -440,21 +448,24 @@ def render_reveal(results: List[Tuple[str, str, int, Optional[int]]]):
     footer.className = "reveal-footer"
     ra.appendChild(footer)
 
-    btn = document.createElement("button")
-    btn.id = "next-round-btn"
-    btn.className = "btn"
-    btn.innerText = "Next prompt"
-    footer.appendChild(btn)
+    is_final_round = STATE.completed_rounds >= MAX_ROUNDS
 
-    def _next(evt=None):
-        if not allow_action():
-            return
-        show("#result-area", False)
-        next_round()
+    if not is_final_round:
+        btn = document.createElement("button")
+        btn.id = "next-round-btn"
+        btn.className = "btn"
+        btn.innerText = "Next prompt"
+        footer.appendChild(btn)
 
-    p = create_proxy(_next)
-    PROXIES.append(p)
-    btn.addEventListener("pointerup", p)
+        def _next(evt=None):
+            if not allow_action():
+                return
+            show("#result-area", False)
+            next_round()
+
+        p = create_proxy(_next)
+        PROXIES.append(p)
+        btn.addEventListener("pointerup", p)
 
     # Show reveal, hide game input
     show("#game-area", False)
@@ -462,6 +473,14 @@ def render_reveal(results: List[Tuple[str, str, int, Optional[int]]]):
 
     # Keep scoreboard visible in the game area next time
     render_scoreboard()
+
+    # After last round, auto-transition to winner overlay
+    if is_final_round:
+        def _show_winner():
+            show_winner_overlay()
+        p = create_proxy(_show_winner)
+        PROXIES.append(p)
+        window.setTimeout(p, 3500)
 
 # ---------- Scoring ----------
 
@@ -473,6 +492,67 @@ def score_guess(guess: str) -> Tuple[int, Optional[int]]:
     if rank is None:
         return 0, None
     return rank, rank  # points = rank
+
+
+# ---------- Winner overlay ----------
+
+def play_winner_sound():
+    try:
+        window.GameAudio.play("gameWin")
+    except Exception:
+        pass
+
+def show_winner_overlay():
+    """Display the winner overlay on top of everything."""
+    stop_music()
+    play_winner_sound()
+
+    overlay = qs("#winner-overlay")
+
+    # Determine winner(s)
+    if not STATE.teams:
+        return
+
+    max_score = max(STATE.scores.get(t, 0) for t in STATE.teams)
+    winners = [t for t in STATE.teams if STATE.scores.get(t, 0) == max_score]
+
+    # Trophy
+    trophy = qs("#winner-trophy")
+    trophy.innerText = "🏆"
+
+    # Title
+    title = qs("#winner-title")
+    if len(winners) > 1:
+        title.innerText = "It's a Tie!"
+    else:
+        title.innerText = "Winner!"
+
+    # Winner name(s)
+    name_el = qs("#winner-name")
+    name_el.innerText = " & ".join(winners)
+
+    # Score
+    score_el = qs("#winner-score")
+    score_el.innerText = f"{max_score} pts"
+
+    # Full scoreboard
+    sb = qs("#winner-scoreboard")
+    sb.innerHTML = ""
+    for team in sorted(STATE.teams, key=lambda t: STATE.scores.get(t, 0), reverse=True):
+        score = STATE.scores.get(team, 0)
+        is_winner = team in winners
+        row = document.createElement("div")
+        row.className = "winner-sb-row"
+        if is_winner:
+            row.classList.add("winner-sb-highlight")
+        row.innerHTML = f"<span>{team}</span><span>{score} pts</span>"
+        sb.appendChild(row)
+
+    # Show overlay
+    overlay.classList.remove("hidden")
+    # Force reflow for animation
+    overlay.offsetHeight
+    overlay.classList.add("visible")
 
 
 # ---------- Team management ----------
@@ -555,6 +635,7 @@ def reset_game():
     STATE.teams = []
     STATE.scores = {}
     STATE.round_num = 0
+    STATE.completed_rounds = 0
     STATE.used_prompt_ids = set()
     STATE.current_prompt = None
     STATE.current_team_idx = 0
@@ -563,6 +644,11 @@ def reset_game():
 
     stop_music()
     ADDED_TEAMS.clear()
+
+    # Hide winner overlay
+    overlay = qs("#winner-overlay")
+    overlay.classList.remove("visible")
+    overlay.classList.add("hidden")
 
     show("#setup-area", True)
     show("#game-area", False)
@@ -590,6 +676,7 @@ def start_game():
     STATE.teams = teams
     STATE.scores = {t: 0 for t in teams}
     STATE.round_num = 0
+    STATE.completed_rounds = 0
     STATE.current_team_idx = 0
     STATE.guesses = {}
 
@@ -616,7 +703,7 @@ def next_round():
     play_sound("nextRound")
     set_round_ui()
     render_scoreboard()
-    set_status(f"Round {STATE.round_num} started. {STATE.teams[0]} to guess.")
+    set_status(f"Round {STATE.completed_rounds + 1} / {MAX_ROUNDS}. {STATE.teams[0]} to guess.")
 
 def submit_guess():
     if not STATE.current_prompt or not STATE.teams:
@@ -634,6 +721,9 @@ def submit_guess():
         set_team_ui()
         set_status(f"{STATE.teams[STATE.current_team_idx]} to guess.")
     else:
+        # Increment completed rounds (this one is done)
+        STATE.completed_rounds += 1
+
         # Score then reveal
         results: List[Tuple[str, str, int, Optional[int]]] = []
         for t in STATE.teams:
@@ -670,8 +760,8 @@ def submit_guess():
 
 def skip_question():
     """
-    Option 1: Skip immediately, no reveal, no points, go to next round.
-    Mark current prompt as used (already is when selected).
+    Skip does NOT count toward the 10 completed rounds.
+    Just load a new prompt without incrementing completed_rounds.
     """
     if not STATE.current_prompt or not STATE.teams:
         return
@@ -679,16 +769,18 @@ def skip_question():
         return
 
     skipped_id = STATE.current_prompt.id
-    # Ensure it's considered used (it should be already, but safe)
     STATE.used_prompt_ids.add(skipped_id)
 
-    # Clear any guesses and go to next round
-    STATE.guesses = {}
+    # Pick a new prompt directly (don't call next_round which increments round_num)
+    STATE.current_prompt = pick_next_prompt()
+    STATE.current_lookup = build_lookup(STATE.current_prompt)
     STATE.current_team_idx = 0
+    STATE.guesses = {}
 
-    set_status("Skipped. Loading next question…")
     play_sound("skip")
-    next_round()
+    set_round_ui()
+    render_scoreboard()
+    set_status(f"Skipped! Still round {STATE.completed_rounds + 1} / {MAX_ROUNDS}. {STATE.teams[0]} to guess.")
 
 
 # ---------- Entry point ----------
@@ -723,6 +815,14 @@ def init():
             reset_game()
         p = create_proxy(_new); PROXIES.append(p)
         qs("#new-game-btn").addEventListener("pointerup", p)
+
+        # Winner overlay New Game
+        def _winner_new(evt=None):
+            if not allow_action():
+                return
+            reset_game()
+        p = create_proxy(_winner_new); PROXIES.append(p)
+        qs("#winner-new-game-btn").addEventListener("pointerup", p)
 
         # Skip
         def _skip(evt=None):

@@ -250,6 +250,24 @@ window.GameAudio = (() => {
     click() {
       const c = ensure(), t = c.currentTime;
       noiseBurst(0.025, 0.08, t, 3000);
+    },
+
+    gameWin() {
+      const c = ensure(), t = c.currentTime;
+      // Triumphant fanfare
+      tone(523, "square", 0.12, 0.14, t);         // C5
+      tone(659, "square", 0.12, 0.14, t + 0.12);  // E5
+      tone(784, "square", 0.12, 0.14, t + 0.24);  // G5
+      tone(1047, "square", 0.45, 0.2, t + 0.38);  // C6 (held)
+      tone(1319, "sine", 0.4, 0.1, t + 0.38);     // E6 sparkle
+      tone(1568, "sine", 0.35, 0.07, t + 0.45);   // G6 shimmer
+      // Big crash cymbal
+      noiseBurst(0.5, 0.14, t + 0.38, 3000);
+      // Low boom
+      tone(65, "sine", 0.6, 0.25, t + 0.36);
+      // Second chord burst
+      chordTone([1047, 1319, 1568], "triangle", 0.6, 0.12, t + 0.55);
+      noiseBurst(0.3, 0.08, t + 0.55, 4000);
     }
   };
 
