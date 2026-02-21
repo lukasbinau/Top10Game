@@ -9,10 +9,11 @@ from js import document, window
 from pyodide.ffi import create_proxy
 
 
-# ---------- DOM helpers ----------
+# ────────── DOM helpers ──────────
 
 def qs(sel: str):
     return document.querySelector(sel)
+
 
 def show(sel: str, visible: bool):
     el = qs(sel)
@@ -21,8 +22,10 @@ def show(sel: str, visible: bool):
     else:
         el.classList.add("hidden")
 
+
 def set_status(msg: str):
     qs("#status").innerText = msg
+
 
 def normalize(s: str) -> str:
     s = (s or "").strip().lower()
@@ -31,13 +34,18 @@ def normalize(s: str) -> str:
     return s
 
 
+# ────────── Constants ──────────
+
 MAX_ROUNDS = 10
+MAX_TEAMS = 8
 
-# Keep JS proxies alive (critical!)
-PROXIES = []
+# Keep JS proxies alive (prevent GC)
+PROXIES: list = []
 
-# Debounce to prevent double-submit on touch
+# Debounce
 _last_action_ts = 0.0
+
+
 def allow_action(min_ms: int = 350) -> bool:
     global _last_action_ts
     now = time.time() * 1000.0
@@ -47,14 +55,41 @@ def allow_action(min_ms: int = 350) -> bool:
     return True
 
 
-# ---------- Sound helpers ----------
+# Team colour palette (one per team slot)
+TEAM_COLORS = [
+    "#5eead4",  # teal
+    "#fb7185",  # pink
+    "#a78bfa",  # purple
+    "#fbbf24",  # amber
+    "#34d399",  # green
+    "#60a5fa",  # blue
+    "#f97316",  # orange
+    "#e879f9",  # fuchsia
+]
+
+# Emoji map for category cards
+CATEGORY_EMOJIS: Dict[str, str] = {
+    "Sports": "⚽",
+    "Pop Culture": "🎬",
+    "Science (Hard)": "🔬",
+    "Science (Medium)": "🧪",
+    "Science (Easy)": "🔭",
+    "Geography 1": "🌍",
+    "Geography 2": "🗺️",
+    "Food & Drink": "🍕",
+    "History": "📜",
+    "Technology": "💻",
+}
+
+
+# ────────── Sound helpers ──────────
 
 def play_sound(name: str):
-    """Play a synthesized SFX via the JS GameAudio engine."""
     try:
         window.GameAudio.play(name)
     except Exception:
         pass
+
 
 def play_reveal_result(best_pts: int):
     try:
@@ -62,11 +97,13 @@ def play_reveal_result(best_pts: int):
     except Exception:
         pass
 
+
 def start_music():
     try:
         window.GameAudio.startMusic()
     except Exception:
         pass
+
 
 def stop_music():
     try:
@@ -75,13 +112,14 @@ def stop_music():
         pass
 
 
-# ---------- Data models ----------
+# ────────── Data models ──────────
 
 @dataclass
 class Answer:
     name: str
     fact: Optional[float] = None
     aliases: List[str] = field(default_factory=list)
+
 
 @dataclass
 class Prompt:
@@ -92,32 +130,30 @@ class Prompt:
     fact_unit: str = ""
     answers: List[Answer] = field(default_factory=list)
 
+
 @dataclass
 class GameState:
     teams: List[str] = field(default_factory=list)
     scores: Dict[str, int] = field(default_factory=dict)
     round_num: int = 0
-    completed_rounds: int = 0    # only incremented when a round is scored (not skipped)
+    completed_rounds: int = 0
 
-    all_prompts: List[Prompt] = field(default_factory=list)   # everything from file
-    prompts: List[Prompt] = field(default_factory=list)       # filtered by pack
+    all_prompts: List[Prompt] = field(default_factory=list)
+    prompts: List[Prompt] = field(default_factory=list)
     used_prompt_ids: set = field(default_factory=set)
 
     current_prompt: Optional[Prompt] = None
     current_team_idx: int = 0
     guesses: Dict[str, str] = field(default_factory=dict)
-
-    # normalized accepted strings -> rank (1..10)
     current_lookup: Dict[str, int] = field(default_factory=dict)
 
-    # pack selection
     selected_pack: str = "__all__"
 
 
 STATE = GameState()
 
 
-# ---------- Loading prompts ----------
+# ────────── Loading prompts ──────────
 
 def load_prompts() -> List[Prompt]:
     with open("prompts.json", "r", encoding="utf-8") as f:
@@ -132,7 +168,6 @@ def load_prompts() -> List[Prompt]:
                 fact=a.get("fact", None),
                 aliases=a.get("aliases", []),
             ))
-
         prompts.append(Prompt(
             id=item["id"],
             category=item.get("category", "Uncategorized"),
@@ -148,28 +183,6 @@ def get_available_packs(prompts: List[Prompt]) -> List[str]:
     return sorted({p.category for p in prompts})
 
 
-def populate_pack_dropdown():
-    sel = qs("#pack-select")
-    if not sel:
-        return
-
-    sel.innerHTML = ""
-
-    opt_all = document.createElement("option")
-    opt_all.value = "__all__"
-    opt_all.text = "All categories"
-    sel.appendChild(opt_all)
-
-    for pack in get_available_packs(STATE.all_prompts):
-        opt = document.createElement("option")
-        opt.value = pack
-        opt.text = pack
-        sel.appendChild(opt)
-
-    sel.value = "__all__"
-    STATE.selected_pack = "__all__"
-
-
 def apply_pack_filter():
     pack = STATE.selected_pack
     if pack == "__all__":
@@ -180,21 +193,18 @@ def apply_pack_filter():
 
 
 def pick_next_prompt() -> Prompt:
-    # Try selected category first
     available = [p for p in STATE.prompts if p.id not in STATE.used_prompt_ids]
     if not available:
         # Fallback: pull from ALL categories
         available = [p for p in STATE.all_prompts if p.id not in STATE.used_prompt_ids]
     if not available:
-        # Ultimate fallback: reset used set
+        # Ultimate fallback: reset
         STATE.used_prompt_ids = set()
         available = STATE.all_prompts[:]
     p = random.choice(available)
     STATE.used_prompt_ids.add(p.id)
     return p
 
-
-# ---------- Per-round lookup (aliases) ----------
 
 def build_lookup(prompt: Prompt) -> Dict[str, int]:
     lookup: Dict[str, int] = {}
@@ -210,7 +220,113 @@ def build_lookup(prompt: Prompt) -> Dict[str, int]:
     return lookup
 
 
-# ---------- UI ----------
+# ────────── Phase management ──────────
+
+PHASES = ["#setup-area", "#handoff-area", "#game-area", "#result-area"]
+
+
+def show_phase(phase_id: str):
+    """Show exactly one phase, hide the rest."""
+    for pid in PHASES:
+        show(pid, pid == phase_id)
+
+
+# ────────── Category cards ──────────
+
+def populate_category_cards():
+    grid = qs("#category-grid")
+    grid.innerHTML = ""
+
+    # "All categories" – full width
+    all_card = _make_cat_card("__all__", "🎲", "All Categories")
+    all_card.classList.add("cat-card-wide")
+    all_card.classList.add("selected")
+    grid.appendChild(all_card)
+
+    for pack in get_available_packs(STATE.all_prompts):
+        emoji = CATEGORY_EMOJIS.get(pack, "❓")
+        card = _make_cat_card(pack, emoji, pack)
+        grid.appendChild(card)
+
+
+def _make_cat_card(value: str, emoji: str, label: str):
+    card = document.createElement("button")
+    card.className = "cat-card"
+    card.dataset.value = value
+    card.innerHTML = f"<span class='cat-emoji'>{emoji}</span>{label}"
+
+    def _click(evt=None):
+        select_category(value)
+    p = create_proxy(_click)
+    PROXIES.append(p)
+    card.addEventListener("pointerup", p)
+    return card
+
+
+def select_category(value: str):
+    STATE.selected_pack = value
+    cards = document.querySelectorAll(".cat-card")
+    for i in range(cards.length):
+        c = cards.item(i)
+        if c.dataset.value == value:
+            c.classList.add("selected")
+        else:
+            c.classList.remove("selected")
+    play_sound("click")
+
+
+# ────────── Progress dots ──────────
+
+def render_dots(container_sel: str):
+    el = qs(container_sel)
+    el.innerHTML = ""
+    for i in range(MAX_ROUNDS):
+        d = document.createElement("div")
+        d.className = "dot"
+        if i < STATE.completed_rounds:
+            d.classList.add("filled")
+        elif i == STATE.completed_rounds:
+            d.classList.add("current")
+        el.appendChild(d)
+
+
+# ────────── Hand-off screen ──────────
+
+def show_handoff():
+    team = STATE.teams[STATE.current_team_idx]
+    color = TEAM_COLORS[STATE.current_team_idx % len(TEAM_COLORS)]
+
+    qs("#handoff-team").innerText = team
+    qs("#handoff-team").style.color = color
+    qs("#handoff-round").innerText = f"Round {STATE.completed_rounds + 1} of {MAX_ROUNDS}"
+
+    render_dots("#handoff-dots")
+    show_phase("#handoff-area")
+
+
+# ────────── Turn / guessing screen ──────────
+
+def show_turn():
+    team = STATE.teams[STATE.current_team_idx]
+    color = TEAM_COLORS[STATE.current_team_idx % len(TEAM_COLORS)]
+
+    qs("#turn-team").innerText = f"{team}'s Turn"
+    qs("#turn-team").style.color = color
+    qs("#turn-round").innerText = f"Round {STATE.completed_rounds + 1} of {MAX_ROUNDS}"
+
+    render_dots("#turn-dots")
+
+    qs("#prompt").innerText = STATE.current_prompt.prompt if STATE.current_prompt else "—"
+    qs("#guess-input").value = ""
+
+    # Close menu if open
+    qs("#game-menu").classList.add("hidden")
+
+    show_phase("#game-area")
+    qs("#guess-input").focus()
+
+
+# ────────── Scoreboard (overlay sheet) ──────────
 
 def render_scoreboard():
     sb = qs("#scoreboard")
@@ -219,127 +335,35 @@ def render_scoreboard():
         score = STATE.scores.get(team, 0)
         row = document.createElement("div")
         row.className = "score-row"
-        row.innerHTML = f"<div><strong>{team}</strong></div><div><strong>{score}</strong> pts</div>"
+        row.innerHTML = (
+            f"<div><strong>{team}</strong></div>"
+            f"<div><strong>{score}</strong> pts</div>"
+        )
         sb.appendChild(row)
 
-def set_round_ui():
-    qs("#round-pill").innerText = f"Round {STATE.completed_rounds + 1} / {MAX_ROUNDS}"
-    qs("#prompt").innerText = STATE.current_prompt.prompt if STATE.current_prompt else "—"
-    set_team_ui()
 
-def set_team_ui():
-    if not STATE.teams:
-        qs("#team-pill").innerText = "Team: —"
-        return
-    team = STATE.teams[STATE.current_team_idx]
-    qs("#team-pill").innerText = f"Team: {team}"
-    qs("#guess-input").value = ""
-    qs("#guess-input").focus()
-
-def render_reveal(results: List[Tuple[str, str, int, Optional[int]]]):
-    """
-    results: (team, guess, points_awarded, rank or None)
-    Shows:
-      - each team's guess + points
-      - the full Top 10 list (from STATE.current_prompt.answers)
-      - a Next Prompt button that starts the next round
-    """
-    ra = qs("#result-area")
-    ra.innerHTML = ""
-
-    prompt = STATE.current_prompt
-    if not prompt:
-        ra.innerHTML = "<h2>Reveal</h2><p>No prompt loaded.</p>"
-        show("#result-area", True)
-        return
-
-    # Header
-    title = document.createElement("h2")
-    title.innerText = "Reveal"
-    ra.appendChild(title)
-
-    q = document.createElement("p")
-    q.innerHTML = f"<strong>Prompt:</strong> {prompt.prompt}"
-    ra.appendChild(q)
-
-    # Team results table
-    table = document.createElement("div")
-    table.innerHTML = "<h3>Team guesses</h3>"
-    ra.appendChild(table)
-
-    rows = document.createElement("div")
-    rows.className = "scoreboard"  # reuse styling
-    table.appendChild(rows)
-
-    for (team, guess, pts, rank) in results:
-        rank_text = f"#{rank}" if rank is not None else "Not in Top 10"
-        row = document.createElement("div")
-        row.className = "score-row"
-        row.innerHTML = (
-            f"<div><strong>{team}</strong><br>"
-            f"<span style='opacity:0.9'>{guess or '—'}</span></div>"
-            f"<div><strong>+{pts}</strong> pts<br>"
-            f"<span style='opacity:0.9'>{rank_text}</span></div>"
-        )
-        rows.appendChild(row)
-
-    # Top 10 list
-    top = document.createElement("div")
-    top.innerHTML = "<div class='divider'></div><h3>Actual Top 10</h3>"
-    ra.appendChild(top)
-
-    ol = document.createElement("ol")
-    for ans in prompt.answers:
-        li = document.createElement("li")
-        if ans.fact is not None and (prompt.fact_label or prompt.fact_unit):
-            # e.g. "Population: 21.5M"
-            label = prompt.fact_label or "Fact"
-            unit = prompt.fact_unit or ""
-            li.innerText = f"{ans.name} — {label}: {ans.fact}{unit}"
-        else:
-            li.innerText = ans.name
-        ol.appendChild(li)
-    top.appendChild(ol)
-
-    # Next prompt button
-    btn = document.createElement("button")
-    btn.id = "next-round-btn"
-    btn.className = "btn"
-    btn.innerText = "Next prompt"
-    ra.appendChild(btn)
-
-    def _next(evt=None):
-        if not allow_action():
-            return
-        show("#result-area", False)
-        next_round()
-
-    p = create_proxy(_next)
-    PROXIES.append(p)
-    btn.addEventListener("pointerup", p)
-
-    # Show reveal screen, hide guessing screen
-    show("#game-area", False)
-    show("#result-area", True)
+def show_scoreboard():
     render_scoreboard()
+    qs("#sb-overlay").classList.remove("hidden")
+    qs("#game-menu").classList.add("hidden")
+
+
+# ────────── Reveal ──────────
 
 def render_reveal(results: List[Tuple[str, str, int, Optional[int]]]):
     """
-    results items are: (team, guess, points_awarded, rank or None)
-    rank is 1..10 if in Top 10 else None
+    results items: (team, guess, points_awarded, rank_or_None)
     """
-
     ra = qs("#result-area")
     ra.innerHTML = ""
 
     prompt = STATE.current_prompt
     if not prompt:
         ra.innerHTML = "<h2>Reveal</h2><p>No prompt loaded.</p>"
-        show("#game-area", False)
-        show("#result-area", True)
+        show_phase("#result-area")
         return
 
-    # ---------- Header ----------
+    # ── Header ──
     header = document.createElement("div")
     header.className = "reveal-header"
 
@@ -349,36 +373,37 @@ def render_reveal(results: List[Tuple[str, str, int, Optional[int]]]):
 
     q = document.createElement("div")
     q.className = "reveal-question"
-    q.innerHTML = f"<div class='reveal-label'>Prompt</div><div class='reveal-prompt'>{prompt.prompt}</div>"
+    q.innerHTML = (
+        f"<div class='reveal-label'>Prompt</div>"
+        f"<div class='reveal-prompt'>{prompt.prompt}</div>"
+    )
     header.appendChild(q)
 
     callout = document.createElement("div")
     callout.className = "reveal-callout"
-    callout.innerHTML = "Remember: <strong>#10 = 10 points</strong> (higher rank number = more points)"
+    callout.innerHTML = "Remember: <strong>#10 = 10 points</strong> (higher rank = more points)"
     header.appendChild(callout)
-
     ra.appendChild(header)
 
-    # ---------- Grid wrapper ----------
+    # ── Grid ──
     grid = document.createElement("div")
     grid.className = "reveal-grid"
     ra.appendChild(grid)
 
-    # ---------- Left: team results ----------
+    # Left panel: team results
     left = document.createElement("div")
     left.className = "reveal-panel"
     grid.appendChild(left)
 
     lh = document.createElement("h3")
-    lh.innerText = "Team results"
+    lh.innerText = "Team Results"
     left.appendChild(lh)
 
     list_el = document.createElement("div")
     list_el.className = "reveal-results"
     left.appendChild(list_el)
 
-    # Helper to classify performance for styling
-    def cls_for(points: int, rank: Optional[int]) -> str:
+    def cls_for(points: int, rank) -> str:
         if rank == 10 or points == 10:
             return "hit-perfect"
         if rank is not None and points >= 7:
@@ -393,12 +418,14 @@ def render_reveal(results: List[Tuple[str, str, int, Optional[int]]]):
 
         team_el = document.createElement("div")
         team_el.className = "reveal-team"
-        team_el.innerHTML = f"<div class='team-name'>{team}</div><div class='team-guess'>{(guess or '—')}</div>"
+        team_el.innerHTML = (
+            f"<div class='team-name'>{team}</div>"
+            f"<div class='team-guess'>{guess or '—'}</div>"
+        )
 
         meta_el = document.createElement("div")
         meta_el.className = "reveal-meta"
-
-        rank_text = f"#{rank}" if rank is not None else "Not in Top 10"
+        rank_text = f"#{rank}" if rank is not None else "Miss"
         meta_el.innerHTML = (
             f"<div class='badge badge-rank'>{rank_text}</div>"
             f"<div class='badge badge-points'>+{pts} pts</div>"
@@ -408,7 +435,7 @@ def render_reveal(results: List[Tuple[str, str, int, Optional[int]]]):
         row.appendChild(meta_el)
         list_el.appendChild(row)
 
-    # ---------- Right: actual top 10 ----------
+    # Right panel: actual top 10
     right = document.createElement("div")
     right.className = "reveal-panel"
     grid.appendChild(right)
@@ -421,15 +448,12 @@ def render_reveal(results: List[Tuple[str, str, int, Optional[int]]]):
     topwrap.className = "top10"
     right.appendChild(topwrap)
 
-    # We want to visually emphasize #10 as the "max points" target
-    # prompt.answers is expected in rank order 1..10
     for i, ans in enumerate(prompt.answers, start=1):
         item = document.createElement("div")
         item.className = "top10-item"
         if i == 10:
             item.classList.add("top10-ten")
 
-        # Optional fact display
         fact_html = ""
         if ans.fact is not None and (prompt.fact_label or prompt.fact_unit):
             label = prompt.fact_label or "Fact"
@@ -443,46 +467,41 @@ def render_reveal(results: List[Tuple[str, str, int, Optional[int]]]):
         )
         topwrap.appendChild(item)
 
-    # ---------- Footer buttons ----------
-    footer = document.createElement("div")
-    footer.className = "reveal-footer"
-    ra.appendChild(footer)
+    # ── Footer ──
+    is_final = STATE.completed_rounds >= MAX_ROUNDS
 
-    is_final_round = STATE.completed_rounds >= MAX_ROUNDS
+    if not is_final:
+        footer = document.createElement("div")
+        footer.className = "reveal-footer"
+        ra.appendChild(footer)
 
-    if not is_final_round:
         btn = document.createElement("button")
-        btn.id = "next-round-btn"
         btn.className = "btn"
-        btn.innerText = "Next prompt"
+        btn.innerText = "Next Round ➜"
         footer.appendChild(btn)
 
         def _next(evt=None):
             if not allow_action():
                 return
-            show("#result-area", False)
             next_round()
 
         p = create_proxy(_next)
         PROXIES.append(p)
         btn.addEventListener("pointerup", p)
 
-    # Show reveal, hide game input
-    show("#game-area", False)
-    show("#result-area", True)
-
-    # Keep scoreboard visible in the game area next time
+    show_phase("#result-area")
     render_scoreboard()
 
-    # After last round, auto-transition to winner overlay
-    if is_final_round:
+    # Auto-transition to winner after last round
+    if is_final:
         def _show_winner():
             show_winner_overlay()
         p = create_proxy(_show_winner)
         PROXIES.append(p)
         window.setTimeout(p, 3500)
 
-# ---------- Scoring ----------
+
+# ────────── Scoring ──────────
 
 def score_guess(guess: str) -> Tuple[int, Optional[int]]:
     g = normalize(guess)
@@ -491,74 +510,47 @@ def score_guess(guess: str) -> Tuple[int, Optional[int]]:
     rank = STATE.current_lookup.get(g)
     if rank is None:
         return 0, None
-    return rank, rank  # points = rank
+    return rank, rank  # points = rank position
 
 
-# ---------- Winner overlay ----------
-
-def play_winner_sound():
-    try:
-        window.GameAudio.play("gameWin")
-    except Exception:
-        pass
+# ────────── Winner overlay ──────────
 
 def show_winner_overlay():
-    """Display the winner overlay on top of everything."""
     stop_music()
-    play_winner_sound()
+    play_sound("gameWin")
 
-    overlay = qs("#winner-overlay")
-
-    # Determine winner(s)
     if not STATE.teams:
         return
 
     max_score = max(STATE.scores.get(t, 0) for t in STATE.teams)
     winners = [t for t in STATE.teams if STATE.scores.get(t, 0) == max_score]
 
-    # Trophy
-    trophy = qs("#winner-trophy")
-    trophy.innerText = "🏆"
+    qs("#winner-trophy").innerText = "🏆"
+    qs("#winner-title").innerText = "It's a Tie!" if len(winners) > 1 else "Winner!"
+    qs("#winner-name").innerText = " & ".join(winners)
+    qs("#winner-score").innerText = f"{max_score} pts"
 
-    # Title
-    title = qs("#winner-title")
-    if len(winners) > 1:
-        title.innerText = "It's a Tie!"
-    else:
-        title.innerText = "Winner!"
-
-    # Winner name(s)
-    name_el = qs("#winner-name")
-    name_el.innerText = " & ".join(winners)
-
-    # Score
-    score_el = qs("#winner-score")
-    score_el.innerText = f"{max_score} pts"
-
-    # Full scoreboard
     sb = qs("#winner-scoreboard")
     sb.innerHTML = ""
     for team in sorted(STATE.teams, key=lambda t: STATE.scores.get(t, 0), reverse=True):
         score = STATE.scores.get(team, 0)
-        is_winner = team in winners
         row = document.createElement("div")
         row.className = "winner-sb-row"
-        if is_winner:
+        if team in winners:
             row.classList.add("winner-sb-highlight")
         row.innerHTML = f"<span>{team}</span><span>{score} pts</span>"
         sb.appendChild(row)
 
-    # Show overlay
+    overlay = qs("#winner-overlay")
     overlay.classList.remove("hidden")
-    # Force reflow for animation
-    overlay.offsetHeight
+    overlay.offsetHeight  # force reflow for animation
     overlay.classList.add("visible")
 
 
-# ---------- Team management ----------
+# ────────── Team management ──────────
 
 ADDED_TEAMS: List[str] = []
-MAX_TEAMS = 8
+
 
 def add_team():
     inp = qs("#team-name-input")
@@ -566,18 +558,19 @@ def add_team():
     if not name:
         return
     if len(ADDED_TEAMS) >= MAX_TEAMS:
-        set_status(f"Maximum {MAX_TEAMS} teams allowed.")
+        set_status(f"Max {MAX_TEAMS} teams.")
         return
     if name in ADDED_TEAMS:
-        set_status(f'"{name}" is already added.')
+        set_status(f'"{name}" already added.')
         return
+
     ADDED_TEAMS.append(name)
     play_sound("teamAdd")
     inp.value = ""
     inp.focus()
     render_team_list()
     update_start_visibility()
-    set_status(f'Added "{name}". {len(ADDED_TEAMS)} team(s) so far.')
+
 
 def remove_team(name: str):
     if name in ADDED_TEAMS:
@@ -585,21 +578,24 @@ def remove_team(name: str):
     play_sound("teamRemove")
     render_team_list()
     update_start_visibility()
-    set_status(f'Removed "{name}". {len(ADDED_TEAMS)} team(s) remaining.')
+
 
 def render_team_list():
     container = qs("#team-list")
     container.innerHTML = ""
-    for t in ADDED_TEAMS:
+    for idx, t in enumerate(ADDED_TEAMS):
         chip = document.createElement("div")
         chip.className = "team-chip"
+        color = TEAM_COLORS[idx % len(TEAM_COLORS)]
+        chip.style.borderColor = f"{color}55"
+        chip.style.background = f"{color}14"
 
         span = document.createElement("span")
         span.innerText = t
         chip.appendChild(span)
 
         btn = document.createElement("button")
-        btn.className = "team-chip-remove"
+        btn.className = "chip-x"
         btn.innerHTML = "&#10005;"
         btn.title = f"Remove {t}"
 
@@ -612,13 +608,14 @@ def render_team_list():
         chip.appendChild(btn)
         container.appendChild(chip)
 
+
 def update_start_visibility():
     btn = qs("#start-btn")
     if len(ADDED_TEAMS) >= 2:
         btn.classList.remove("hidden")
     else:
         btn.classList.add("hidden")
-    # Disable input once max reached
+
     inp = qs("#team-name-input")
     add_btn = qs("#add-team-btn")
     if len(ADDED_TEAMS) >= MAX_TEAMS:
@@ -629,7 +626,7 @@ def update_start_visibility():
         add_btn.disabled = False
 
 
-# ---------- Game Flow ----------
+# ────────── Game flow ──────────
 
 def reset_game():
     STATE.teams = []
@@ -645,65 +642,52 @@ def reset_game():
     stop_music()
     ADDED_TEAMS.clear()
 
-    # Hide winner overlay
+    # Hide overlays
     overlay = qs("#winner-overlay")
     overlay.classList.remove("visible")
     overlay.classList.add("hidden")
+    qs("#sb-overlay").classList.add("hidden")
 
-    show("#setup-area", True)
-    show("#game-area", False)
-    show("#result-area", False)
-    render_scoreboard()
+    show_phase("#setup-area")
     render_team_list()
     update_start_visibility()
 
     qs("#team-name-input").value = ""
     qs("#team-name-input").focus()
-    set_status("Ready. Choose a pack, add teams, and press Start Game.")
+
 
 def start_game():
     if len(ADDED_TEAMS) < 2:
-        set_status("Need at least 2 teams. Add them above.")
-        qs("#team-name-input").focus()
+        set_status("Need at least 2 teams.")
         return
-    teams = list(ADDED_TEAMS)
 
     apply_pack_filter()
-    if len(STATE.prompts) == 0:
-        set_status("No prompts in this pack. Pick another pack.")
+    if not STATE.prompts:
+        set_status("No prompts in this category.")
         return
 
-    STATE.teams = teams
-    STATE.scores = {t: 0 for t in teams}
+    STATE.teams = list(ADDED_TEAMS)
+    STATE.scores = {t: 0 for t in STATE.teams}
     STATE.round_num = 0
     STATE.completed_rounds = 0
     STATE.current_team_idx = 0
     STATE.guesses = {}
 
-    show("#result-area", False)
-    show("#setup-area", False)
-    show("#game-area", True)
-
     play_sound("gameStart")
     start_music()
-
     next_round()
+
 
 def next_round():
     STATE.round_num += 1
     STATE.current_prompt = pick_next_prompt()
     STATE.current_lookup = build_lookup(STATE.current_prompt)
-
     STATE.current_team_idx = 0
     STATE.guesses = {}
 
-    show("#result-area", False)
-    show("#game-area", True)
-
     play_sound("nextRound")
-    set_round_ui()
-    render_scoreboard()
-    set_status(f"Round {STATE.completed_rounds + 1} / {MAX_ROUNDS}. {STATE.teams[0]} to guess.")
+    show_handoff()
+
 
 def submit_guess():
     if not STATE.current_prompt or not STATE.teams:
@@ -716,15 +700,14 @@ def submit_guess():
     STATE.guesses[team] = guess
 
     if STATE.current_team_idx < len(STATE.teams) - 1:
+        # More teams to go → hand off
         play_sound("submitGuess")
         STATE.current_team_idx += 1
-        set_team_ui()
-        set_status(f"{STATE.teams[STATE.current_team_idx]} to guess.")
+        show_handoff()
     else:
-        # Increment completed rounds (this one is done)
+        # All teams done → score & reveal
         STATE.completed_rounds += 1
 
-        # Score then reveal
         results: List[Tuple[str, str, int, Optional[int]]] = []
         for t in STATE.teams:
             g = STATE.guesses.get(t, "")
@@ -732,73 +715,36 @@ def submit_guess():
             STATE.scores[t] = STATE.scores.get(t, 0) + pts
             results.append((t, g, pts, rank))
 
-        # Play reveal + hit sound (delayed in JS)
         best_pts = max((pts for _, _, pts, _ in results), default=0)
         play_reveal_result(best_pts)
+        render_reveal(results)
 
-        # Minimal reveal-less flow isn't requested here; keep existing reveal section hidden if you want.
-        # For now, just show a simple message and move on is NOT desired; we keep current behavior (your reveal UI).
-        # If you still want reveal, keep your render_reveal function from your current file.
-        #
-        # NOTE: If your current version has render_reveal, keep it. If not, this will just continue to next round.
-        #
-        try:
-            from typing import cast
-            render_reveal = cast(object, globals().get("render_reveal"))
-            if callable(render_reveal):
-                render_reveal(results)
-                show("#game-area", False)
-                set_status("Reveal shown. Press Next Round to continue.")
-                render_scoreboard()
-                return
-        except Exception:
-            pass
-
-        # Fallback: no reveal available
-        render_scoreboard()
-        next_round()
 
 def skip_question():
-    """
-    Skip does NOT count toward the 10 completed rounds.
-    Just load a new prompt without incrementing completed_rounds.
-    """
+    """Skip without counting toward 10 rounds."""
     if not STATE.current_prompt or not STATE.teams:
         return
     if not allow_action():
         return
 
-    skipped_id = STATE.current_prompt.id
-    STATE.used_prompt_ids.add(skipped_id)
-
-    # Pick a new prompt directly (don't call next_round which increments round_num)
+    STATE.used_prompt_ids.add(STATE.current_prompt.id)
     STATE.current_prompt = pick_next_prompt()
     STATE.current_lookup = build_lookup(STATE.current_prompt)
     STATE.current_team_idx = 0
     STATE.guesses = {}
 
     play_sound("skip")
-    set_round_ui()
-    render_scoreboard()
-    set_status(f"Skipped! Still round {STATE.completed_rounds + 1} / {MAX_ROUNDS}. {STATE.teams[0]} to guess.")
+    show_handoff()
 
 
-# ---------- Entry point ----------
+# ────────── Init ──────────
 
 def init():
     try:
         STATE.all_prompts = load_prompts()
         STATE.prompts = STATE.all_prompts[:]
 
-        populate_pack_dropdown()
-
-        # Dropdown change
-        def _pack_change(evt=None):
-            sel = qs("#pack-select")
-            STATE.selected_pack = sel.value
-            set_status(f"Selected pack: {sel.value}")
-        p = create_proxy(_pack_change); PROXIES.append(p)
-        qs("#pack-select").addEventListener("change", p)
+        populate_category_cards()
 
         # Start Game
         def _start(evt=None):
@@ -808,27 +754,14 @@ def init():
         p = create_proxy(_start); PROXIES.append(p)
         qs("#start-btn").addEventListener("pointerup", p)
 
-        # New Game
-        def _new(evt=None):
+        # Hand-off → Ready
+        def _ready(evt=None):
             if not allow_action():
                 return
-            reset_game()
-        p = create_proxy(_new); PROXIES.append(p)
-        qs("#new-game-btn").addEventListener("pointerup", p)
-
-        # Winner overlay New Game
-        def _winner_new(evt=None):
-            if not allow_action():
-                return
-            reset_game()
-        p = create_proxy(_winner_new); PROXIES.append(p)
-        qs("#winner-new-game-btn").addEventListener("pointerup", p)
-
-        # Skip
-        def _skip(evt=None):
-            skip_question()
-        p = create_proxy(_skip); PROXIES.append(p)
-        qs("#skip-btn").addEventListener("pointerup", p)
+            play_sound("click")
+            show_turn()
+        p = create_proxy(_ready); PROXIES.append(p)
+        qs("#handoff-ready-btn").addEventListener("pointerup", p)
 
         # Submit Guess
         def _submit(evt=None):
@@ -836,14 +769,42 @@ def init():
         p = create_proxy(_submit); PROXIES.append(p)
         qs("#submit-btn").addEventListener("pointerup", p)
 
-        # Enter submits guess
+        # Enter key submits guess
         def _keydown_guess(evt):
             if evt.key == "Enter":
                 submit_guess()
         p = create_proxy(_keydown_guess); PROXIES.append(p)
         qs("#guess-input").addEventListener("keydown", p)
 
-        # Add team button
+        # Menu: Skip
+        def _skip(evt=None):
+            skip_question()
+        p = create_proxy(_skip); PROXIES.append(p)
+        qs("#skip-btn").addEventListener("pointerup", p)
+
+        # Menu: View Scores
+        def _scores(evt=None):
+            show_scoreboard()
+        p = create_proxy(_scores); PROXIES.append(p)
+        qs("#scores-btn").addEventListener("pointerup", p)
+
+        # Menu: New Game
+        def _new(evt=None):
+            if not allow_action():
+                return
+            reset_game()
+        p = create_proxy(_new); PROXIES.append(p)
+        qs("#new-game-btn").addEventListener("pointerup", p)
+
+        # Winner overlay: New Game
+        def _winner_new(evt=None):
+            if not allow_action():
+                return
+            reset_game()
+        p = create_proxy(_winner_new); PROXIES.append(p)
+        qs("#winner-new-game-btn").addEventListener("pointerup", p)
+
+        # Add Team button
         def _add_team(evt=None):
             if not allow_action():
                 return
@@ -851,16 +812,17 @@ def init():
         p = create_proxy(_add_team); PROXIES.append(p)
         qs("#add-team-btn").addEventListener("pointerup", p)
 
-        # Enter on team name input adds a team
-        def _keydown_team_input(evt):
+        # Enter key adds team
+        def _keydown_team(evt):
             if evt.key == "Enter":
                 if allow_action():
                     add_team()
-        p = create_proxy(_keydown_team_input); PROXIES.append(p)
+        p = create_proxy(_keydown_team); PROXIES.append(p)
         qs("#team-name-input").addEventListener("keydown", p)
 
         reset_game()
-        set_status("Ready ✅ Choose a pack, add teams, and press Start Game.")
+        set_status("Ready ✅")
+
     except Exception as e:
-        set_status(f"INIT ERROR:\n{e}")
+        set_status(f"INIT ERROR: {e}")
         raise
