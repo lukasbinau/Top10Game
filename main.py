@@ -79,6 +79,7 @@ CATEGORY_EMOJIS: Dict[str, str] = {
     "Food & Drink": "🍕",
     "History": "📜",
     "Technology": "💻",
+    "Mail Mix (DA)": "📧",
 }
 
 

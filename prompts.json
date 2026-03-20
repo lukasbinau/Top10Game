@@ -9196,5 +9196,197 @@
         ]
       }
     ]
+  },
+  {
+    "id": "mail_mix_popular_sodas",
+    "category": "Mail Mix (DA)",
+    "prompt": "Verdens 10 mest populære sodavand (fra jeres data).",
+    "fact_label": "Placering",
+    "fact_unit": "",
+    "answers": [
+      {
+        "name": "Coca-Cola",
+        "fact": 1,
+        "aliases": ["coca-cola", "coca cola", "coke", "cola", "cocacola"]
+      },
+      {
+        "name": "Pepsi",
+        "fact": 2,
+        "aliases": ["pepsi", "pepsi cola", "pepsi-cola", "pepsicola"]
+      },
+      {
+        "name": "Sprite",
+        "fact": 3,
+        "aliases": ["sprite", "sprite soda", "sprite zero"]
+      },
+      {
+        "name": "Mountain Dew",
+        "fact": 4,
+        "aliases": ["mountain dew", "mt dew", "mtn dew", "mountaindew"]
+      },
+      {
+        "name": "Dr Pepper",
+        "fact": 5,
+        "aliases": ["dr pepper", "doctor pepper", "dr. pepper", "drpepper"]
+      },
+      {
+        "name": "Fanta",
+        "fact": 6,
+        "aliases": ["fanta", "orange fanta", "fanta orange"]
+      },
+      {
+        "name": "7UP",
+        "fact": 7,
+        "aliases": ["7up", "7 up", "seven up", "sevenup"]
+      },
+      {
+        "name": "Root Beer",
+        "fact": 8,
+        "aliases": ["root beer", "rootbeer", "a&w", "aw", "barq's", "barqs"]
+      },
+      {
+        "name": "Crush",
+        "fact": 9,
+        "aliases": ["crush", "orange crush", "crush soda"]
+      },
+      {
+        "name": "Mirinda",
+        "fact": 10,
+        "aliases": ["mirinda", "mirinda orange", "mirinda soda"]
+      }
+    ]
+  },
+  {
+    "id": "mail_mix_largest_countries",
+    "category": "Mail Mix (DA)",
+    "prompt": "Verdens 10 største lande efter areal (fra jeres data).",
+    "fact_label": "Areal",
+    "fact_unit": " km²",
+    "answers": [
+      { "name": "Rusland", "fact": 17098246, "aliases": ["rusland", "russia"] },
+      { "name": "Canada", "fact": 9984670, "aliases": ["canada", "the canada"] },
+      { "name": "Kina", "fact": 9596961, "aliases": ["kina", "china", "folkerepublikken kina", "prc"] },
+      { "name": "USA", "fact": 9525067, "aliases": ["usa", "u.s.a", "us", "united states", "united states of america", "amerika"] },
+      { "name": "Brasilien", "fact": 8515767, "aliases": ["brasilien", "brazil", "brasil"] },
+      { "name": "Australien", "fact": 7692024, "aliases": ["australien", "australia", "commonwealth of australia"] },
+      { "name": "Indien", "fact": 3287263, "aliases": ["indien", "india", "bharat"] },
+      { "name": "Argentina", "fact": 2780400, "aliases": ["argentina", "argentina republic"] },
+      { "name": "Kasakhstan", "fact": 2724900, "aliases": ["kasakhstan", "kazakhstan"] },
+      { "name": "Algeriet", "fact": 2381741, "aliases": ["algeriet", "algeria", "algerie"] }
+    ]
+  },
+  {
+    "id": "mail_mix_dk_revenue_companies",
+    "category": "Mail Mix (DA)",
+    "prompt": "Danmarks 10 største virksomheder efter omsætning (data fra jeres liste).",
+    "fact_label": "Omsætning",
+    "fact_unit": " mia. kr.",
+    "answers": [
+      { "name": "A.P. Møller – Mærsk", "fact": 383, "aliases": ["a.p. møller mærsk", "ap møller mærsk", "a p møller mærsk", "mærsk", "maersk", "apmollermaersk"] },
+      { "name": "Novo Nordisk", "fact": 290, "aliases": ["novo nordisk", "novo", "novo-nordisk"] },
+      { "name": "DSV", "fact": 167, "aliases": ["dsv", "dsv a/s", "dsv as"] },
+      { "name": "Vestas", "fact": 129, "aliases": ["vestas", "vestas wind systems", "vestas wind"] },
+      { "name": "United Shipping & Trading Company (USTC)", "fact": 109, "aliases": ["ustc", "united shipping and trading company", "united shipping & trading company", "united shipping trading"] },
+      { "name": "Arla", "fact": 102, "aliases": ["arla", "arla foods", "arla foods amba"] },
+      { "name": "Danfoss", "fact": 86, "aliases": ["danfoss", "danfoss a/s", "danfoss as"] },
+      { "name": "Andel", "fact": 84, "aliases": ["andel", "andel koncernen", "andel group"] },
+      { "name": "ISS", "fact": 84, "aliases": ["iss", "iss world", "iss a/s", "iss as"] },
+      { "name": "Nitor Energy", "fact": 0, "aliases": ["nitor energy", "nitor", "nitorenergy"] }
+    ]
+  },
+  {
+    "id": "mail_mix_largest_religions",
+    "category": "Mail Mix (DA)",
+    "prompt": "Verdens 10 største religioner/livssyn efter antal tilhængere (fra jeres data).",
+    "fact_label": "Tilhængere",
+    "fact_unit": " mio.",
+    "answers": [
+      { "name": "Kristendom", "fact": 2400, "aliases": ["kristendom", "christianity", "kristen", "christian"] },
+      { "name": "Islam", "fact": 1900, "aliases": ["islam", "muslim", "muslimer"] },
+      { "name": "Ikke-religiøse", "fact": 1300, "aliases": ["ikke-religiøse", "ikke religiøse", "unaffiliated", "non religious", "non-religious", "religionsfri"] },
+      { "name": "Hinduisme", "fact": 1200, "aliases": ["hinduisme", "hinduism", "hindu", "hinduer"] },
+      { "name": "Buddhisme", "fact": 500, "aliases": ["buddhisme", "buddhism", "buddhist", "buddhister"] },
+      { "name": "Folkereligioner", "fact": 400, "aliases": ["folkereligioner", "folk religions", "folkereligion", "traditionelle religioner"] },
+      { "name": "Sikhisme", "fact": 30, "aliases": ["sikhisme", "sikhism", "sikh", "sikher"] },
+      { "name": "Jødedom", "fact": 15, "aliases": ["jødedom", "jodedom", "judaism", "jewish"] },
+      { "name": "Shinto", "fact": 5, "aliases": ["shinto", "shintoisme", "shintoism"] },
+      { "name": "Jainisme", "fact": 4, "aliases": ["jainisme", "jainism", "jain", "jainer"] }
+    ]
+  },
+  {
+    "id": "mail_mix_largest_dk_cities",
+    "category": "Mail Mix (DA)",
+    "prompt": "Danmarks 10 største byområder efter indbyggertal (1. januar 2025, jeres data).",
+    "fact_label": "Indbyggere",
+    "fact_unit": "",
+    "answers": [
+      { "name": "København", "fact": 1396508, "aliases": ["københavn", "kobenhavn", "koebenhavn", "copenhagen", "storkøbenhavn"] },
+      { "name": "Aarhus", "fact": 301049, "aliases": ["aarhus", "århus", "arhus"] },
+      { "name": "Odense", "fact": 185480, "aliases": ["odense", "odense by"] },
+      { "name": "Aalborg", "fact": 121878, "aliases": ["aalborg", "ålborg", "alborg"] },
+      { "name": "Esbjerg", "fact": 71554, "aliases": ["esbjerg", "esberg"] },
+      { "name": "Randers", "fact": 64511, "aliases": ["randers", "randers by"] },
+      { "name": "Horsens", "fact": 64418, "aliases": ["horsens", "horsens by"] },
+      { "name": "Kolding", "fact": 63645, "aliases": ["kolding", "kolding by"] },
+      { "name": "Vejle", "fact": 62011, "aliases": ["vejle", "vejle by"] },
+      { "name": "Roskilde", "fact": 53354, "aliases": ["roskilde", "roskilde by"] }
+    ]
+  },
+  {
+    "id": "mail_mix_richest_people",
+    "category": "Mail Mix (DA)",
+    "prompt": "Top 10 rigeste personer i verden (marts 2025, jeres data).",
+    "fact_label": "Formue",
+    "fact_unit": " mia. USD",
+    "answers": [
+      { "name": "Elon Musk", "fact": 342, "aliases": ["elon musk", "musk", "elon"] },
+      { "name": "Mark Zuckerberg", "fact": 216, "aliases": ["mark zuckerberg", "zuckerberg", "mark"] },
+      { "name": "Jeff Bezos", "fact": 215, "aliases": ["jeff bezos", "bezos", "jeff"] },
+      { "name": "Larry Ellison", "fact": 192, "aliases": ["larry ellison", "ellison", "larence ellison"] },
+      { "name": "Bernard Arnault & familie", "fact": 178, "aliases": ["bernard arnault", "arnault", "bernard arnault familie", "bernard arnault and family"] },
+      { "name": "Warren Buffett", "fact": 154, "aliases": ["warren buffett", "buffett", "warren buffet"] },
+      { "name": "Larry Page", "fact": 144, "aliases": ["larry page", "page"] },
+      { "name": "Sergey Brin", "fact": 138, "aliases": ["sergey brin", "sergei brin", "brin"] },
+      { "name": "Amancio Ortega", "fact": 124, "aliases": ["amancio ortega", "ortega", "amancio"] },
+      { "name": "Steve Ballmer", "fact": 118, "aliases": ["steve ballmer", "ballmer", "steven ballmer"] }
+    ]
+  },
+  {
+    "id": "mail_mix_most_visited_countries",
+    "category": "Mail Mix (DA)",
+    "prompt": "Top 10 mest besøgte lande i 2024 (fra jeres data).",
+    "fact_label": "Besøgende",
+    "fact_unit": " mio.",
+    "answers": [
+      { "name": "Frankrig", "fact": 100, "aliases": ["frankrig", "france", "frankrike"] },
+      { "name": "Spanien", "fact": 85, "aliases": ["spanien", "spain", "espana", "españa"] },
+      { "name": "USA", "fact": 66, "aliases": ["usa", "u.s.a", "us", "united states", "united states of america"] },
+      { "name": "Italien", "fact": 64, "aliases": ["italien", "italy", "italia"] },
+      { "name": "Tyrkiet", "fact": 55, "aliases": ["tyrkiet", "turkey", "turkiye", "türkiye"] },
+      { "name": "Mexico", "fact": 44, "aliases": ["mexico", "méxico", "de forenede mexicanske stater"] },
+      { "name": "Storbritannien", "fact": 37, "aliases": ["storbritannien", "storbritannien", "united kingdom", "uk", "great britain", "britain"] },
+      { "name": "Tyskland", "fact": 36, "aliases": ["tyskland", "germany", "deutschland"] },
+      { "name": "Thailand", "fact": 35, "aliases": ["thailand", "kongeriget thailand"] },
+      { "name": "Grækenland", "fact": 32, "aliases": ["grækenland", "graekenland", "greece", "hellas"] }
+    ]
+  },
+  {
+    "id": "mail_mix_shoe_brands",
+    "category": "Mail Mix (DA)",
+    "prompt": "Top 10 mest populære skomærker i 2025 (fra jeres data).",
+    "fact_label": "Placering",
+    "fact_unit": "",
+    "answers": [
+      { "name": "Nike", "fact": 1, "aliases": ["nike", "nike shoes", "nike sneakers"] },
+      { "name": "Adidas", "fact": 2, "aliases": ["adidas", "adidas shoes", "adidas sneakers"] },
+      { "name": "Jordan", "fact": 3, "aliases": ["jordan", "air jordan", "jordan brand", "nike jordan"] },
+      { "name": "Puma", "fact": 4, "aliases": ["puma", "puma shoes", "puma sneakers"] },
+      { "name": "Skechers", "fact": 5, "aliases": ["skechers", "sketchers", "skechers shoes"] },
+      { "name": "New Balance", "fact": 6, "aliases": ["new balance", "newbalance", "nb"] },
+      { "name": "ASICS", "fact": 7, "aliases": ["asics", "asic", "asics shoes"] },
+      { "name": "Reebok", "fact": 8, "aliases": ["reebok", "reebok shoes", "rbk"] },
+      { "name": "Vans", "fact": 9, "aliases": ["vans", "vans shoes", "vans sneakers"] },
+      { "name": "Brooks", "fact": 10, "aliases": ["brooks", "brooks running", "brooks shoes"] }
+    ]
   }
 ]
